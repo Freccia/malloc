@@ -26,8 +26,19 @@ int main(int ac, char **av)
 		ft_putstr("Reading from allocated space...\n");
 		ft_printf("%s\n", heap_chunk);
 
+		ft_putstr("Allocating space...\n");
+		heap_chunk = mymalloc(sizeof(200));
+
+		ft_putstr("Writing to allocated space...\n");
+		heap_chunk = strcpy(heap_chunk, "LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
+
+		ft_putstr("Reading from allocated space...\n");
+		ft_printf("%s\n", heap_chunk);
+
 		ft_putstr("Freeing allocated space\n");
 		myfree(heap_chunk);
+
+		while (1);
 
 		return (0);
 }
