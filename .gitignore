@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# Project executables
+malloc_test
+
 # Vim swap files
 .*.sw*
 
