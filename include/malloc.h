@@ -1,11 +1,12 @@
 
 
 #ifndef FT_MALLOC
-#define FT_MALLOC
+# define FT_MALLOC
 
-#include <stdlib.h>
-#include <sys/mman.h>
-#include "libft.h"
+# include <stdlib.h>
+# include <sys/mman.h>
+# include <unistd.h>
+# include "libft.h"
 
 /*
 **
@@ -23,13 +24,21 @@
 
 // Useful: http://g.oswego.edu/dl/html/malloc.html
 
-#	define PAGE_SIZE				(unsigned int)getpagesize()
+//#	define PAGE_SIZE				(unsigned int)getpagesize()
+#	define PAGE_SIZE				(unsigned int)sysconf(_SC_PAGESIZE)
 # define META_SIZE				(unsigned int)sizeof(t_block)
 
 # define TINY							PAGE_SIZE * 4
 # define SMALL						PAGE_SIZE * 12
 
-typedef struct	s_block		t_block;
+# ifndef TRUE
+# 	define TRUE							1
+# endif
+# ifndef FALSE
+#		define FALSE						0
+# endif
+
+typedef struct	s_page		t_page;
 typedef struct	s_chunk		t_chunk;
 
 /*
@@ -39,28 +48,31 @@ typedef struct	s_chunk		t_chunk;
 
 struct	s_chunk
 {
+	int						free;
 	size_t				size;
-	bool					free;
 };
 
 /*
 **	t_block is the allocated area got by mmap.
-**		the block of size TINY, SMALL or LARGE,
+**		The block's size is TINY, SMALL or LARGE,
 **			and it will be splitted in chunks.
 */
 
-struct	s_block
+struct	s_page
 {
-  size_t				size;
-  bool					full;
-  t_block				*next;
-  t_block				*prev;
-	void					*data;
+  int						full;
+	size_t				size;
+	size_t				size_left;
+  t_page				*next;
+	t_chunk				first;
 };
 
-void		free(void *ptr);
-void		*malloc(size_t size);
-void		*realloc(void *ptr, size_t size);
-void		*show_alloc_mem();
+t_page					*g_mem;
+extern t_page		*g_mem;
+
+void						free(void *ptr);
+void						*malloc(size_t size);
+void						*realloc(void *ptr, size_t size);
+void						*show_alloc_mem();
 
 #endif

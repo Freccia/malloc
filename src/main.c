@@ -23,10 +23,10 @@ int main(int ac, char **av)
 		ft_putstr("Writing to allocated space...\n");
 		heap_chunk = strcpy(heap_chunk, "LOLOLOLOLOL");
 
-		ft_putstr("Reading from allocated space...");
+		ft_putstr("Reading from allocated space...\n");
 		ft_printf("%s\n", heap_chunk);
 
-		ft_putstr("Freeing allocated space");
+		ft_putstr("Freeing allocated space\n");
 		myfree(heap_chunk);
 
 		return (0);
