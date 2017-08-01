@@ -6,7 +6,7 @@ endif
 NAME				= libft_malloc_$(HOSTTYPE).so
 NAME_SLINK	= libft_malloc.so
 
-SRC_NAME		= main.c
+SRC_NAME		= main.c malloc.c
 OBJ_NAME		= $(SRC_NAME:.c=.o)
 LIB_NAME		= -lft
 
