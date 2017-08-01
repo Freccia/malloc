@@ -6,57 +6,65 @@ endif
 NAME				= libft_malloc_$(HOSTTYPE).so
 NAME_SLINK	= libft_malloc.so
 
-SRC_NAME		= main.c malloc.c
+NAME_TEST		= malloc_test
+SRC_TEST		= main.c
+SRC_T				= $(addprefix $(SRC_PATH),$(SRC_TEST))
+
+SRC_NAME		= malloc.c
 OBJ_NAME		= $(SRC_NAME:.c=.o)
-LIB_NAME		= -lft
+LIB_NAME		= -lft -lft_malloc
 
 SRC_PATH		= ./src/
 OBJ_PATH		= ./obj/
-LIB_PATH		= ./libft/
+LIB_PATH		= ./libft/ .
 INC_PATH		= ./include ./libft/include ./libft/libft
 
 SRC					= $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ					= $(SRC:.c=.o)
-#OBJ				= $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 LIB 				= $(addprefix -L, $(LIB_PATH))
 INC 				= $(addprefix -I ,$(INC_PATH))
 
 CC					= gcc
 CFLAGS			= -Wall -Wextra -Werror
 
-RED					= \033[31;44m
-GREEN				= \033[32;44m
+RED					= \033[31m
+GREEN				= \033[32m
 ENDC				= \033[0m
 
 .PHONY: all lib clean fclean re libfclean libclean
 
-all: lib $(NAME)
+all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(INC) $(SRC) -o $(NAME) $(LIB) $(LIB_NAME)
+$(NAME): lib $(OBJ)
+	@ar -rcs $(NAME) $(OBJ)
+	@ranlib $(NAME)
 	ln -sf libft_malloc_$(HOSTTYPE).so $(NAME_SLINK)
 	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(INC)
 
-lib:
-	@make -C ./libft
+test:
+	@printf "$(GREEN) Make $(NAME_TEST) $(ENDC)\n"
+	$(CC) $(CFLAGS) $(INC) $(SRC_T) -o $(NAME_TEST) $(LIB) $(LIB_NAME)
 
 clean:
 	@printf "$(RED) Removing $(NAME) objects $(ENDC)\n"
-	@rm -rfv $(OBJ) $(OBJ_PATH)
+	@rm -rfv $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
 
 fclean: clean libfclean
-	@printf "$(RED) Removing $(NAME) executables $(ENDC)\n"
-	@rm -fv $(NAME) $(NAME_SLINK)
+	@printf "$(RED) Removing $(NAME) $(ENDC)\n"
+	@printf "$(RED) Removing $(NAME_SLINK) $(ENDC)\n"
+	@printf "$(RED) Removing $(NAME_TEST) $(ENDC)\n"
+	@rm -fv $(NAME) $(NAME_SLINK) $(NAME_TEST)
+
+lib:
+	@make -C ./libft
 
 libclean:
-	@printf "$(RED) Removing $(LIB_PATH) objects $(ENDC)\n"
 	@make -C ./libft clean
 
 libfclean:
-	@printf "$(RED) Removing $(LIB_PATH) executables $(ENDC)\n"
 	@make -C ./libft fclean
 
 re: fclean
