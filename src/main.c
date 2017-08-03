@@ -38,7 +38,8 @@ int main(int ac, char **av)
 		ft_putstr("Freeing allocated space\n");
 		myfree(heap_chunk);
 
-		while (1);
+//	leaks
+//		while (1);
 
 		return (0);
 }

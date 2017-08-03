@@ -3,6 +3,7 @@
 #ifndef FT_MALLOC
 # define FT_MALLOC
 
+# include <stdint.h>
 # include <stdlib.h>
 # include <sys/mman.h>
 # include <unistd.h>
@@ -38,37 +39,49 @@
 #		define FALSE						0
 # endif
 
-typedef struct	s_page		t_page;
-typedef struct	s_chunk		t_chunk;
+/*
+**	Structures
+*/
 
 /*
-**	t_chunk represent the chunk's metadata in which 
+**	`t_chunk` represent the chunk's metadata in which 
 **		a t_block is divided.
 */
 
-struct	s_chunk
-{
-	int						free;
-	size_t				size;
-};
-
 /*
-**	t_block is the allocated area got by mmap.
-**		The block's size is TINY, SMALL or LARGE,
+**	`t_page` is the allocated area got by mmap.
+**		The pages's size is TINY, SMALL or LARGE,
 **			and it will be splitted in chunks.
 */
 
+typedef struct	s_page		t_page;
+typedef struct	s_chunk		t_chunk;
+
+struct	s_chunk
+{
+	uint8_t				free;
+	size_t				size;
+};
+
 struct	s_page
 {
-  int						full;
+  uint8_t				full;
 	size_t				size;
 	size_t				size_left;
   t_page				*next;
 	t_chunk				first;
 };
 
+/*
+**	Globals
+*/
+
 t_page					*g_mem;
 extern t_page		*g_mem;
+
+/*
+**	Functions definitions
+*/
 
 void						free(void *ptr);
 void						*malloc(size_t size);
