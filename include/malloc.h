@@ -23,7 +23,9 @@
 **
 */
 
-// Useful: http://g.oswego.edu/dl/html/malloc.html
+// Useful:
+// http://g.oswego.edu/dl/html/malloc.html
+// https://danluu.com/malloc-tutorial
 
 //#	define PAGE_SIZE				(unsigned int)getpagesize()
 #	define PAGE_SIZE				(unsigned int)sysconf(_SC_PAGESIZE)
@@ -45,11 +47,11 @@
 
 /*
 **	`t_chunk` represent the chunk's metadata in which 
-**		a t_block is divided.
+**		a t_page is divided.
 */
 
 /*
-**	`t_page` is the allocated area got by mmap.
+**	`t_page` is the metadata about allocated area got by mmap.
 **		The pages's size is TINY, SMALL or LARGE,
 **			and it will be splitted in chunks.
 */
@@ -86,6 +88,6 @@ extern t_page		*g_mem;
 void						free(void *ptr);
 void						*malloc(size_t size);
 void						*realloc(void *ptr, size_t size);
-void						*show_alloc_mem();
+void						show_alloc_mem();
 
 #endif

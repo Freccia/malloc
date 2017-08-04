@@ -1,6 +1,6 @@
 
-#include <stdio.h>
-#include <unistd.h>
+#include <stdio.h>		//norme
+#include <unistd.h>		//norme
 #include "malloc.h"
 
 void	*mymalloc(size_t len);
@@ -25,18 +25,35 @@ int main(int ac, char **av)
 
 		ft_putstr("Reading from allocated space...\n");
 		ft_printf("%s\n", heap_chunk);
+		printf("addr: %p\n", &heap_chunk);
+
+		ft_putendl("----------------------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
 		heap_chunk = mymalloc(sizeof(200));
 
 		ft_putstr("Writing to allocated space...\n");
-		heap_chunk = strcpy(heap_chunk, "LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
+		heap_chunk = strcpy(heap_chunk, "LOLOLOLOLOLOLOLOLO\
+						LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 
 		ft_putstr("Reading from allocated space...\n");
 		ft_printf("%s\n", heap_chunk);
+		printf("addr: %p\n", &heap_chunk);
+
+		ft_putendl("----------------------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------------------");
+
 
 		ft_putstr("Freeing allocated space\n");
 		myfree(heap_chunk);
+
+		ft_putendl("----------------------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------------------");
+
 
 //	leaks
 //		while (1);
