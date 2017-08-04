@@ -29,10 +29,16 @@
 
 //#	define PAGE_SIZE				(unsigned int)getpagesize()
 #	define PAGE_SIZE				(unsigned int)sysconf(_SC_PAGESIZE)
-# define META_SIZE				(unsigned int)sizeof(t_block)
+# define PAGE_META				(unsigned int)sizeof(t_page)
+# define CHUNK_META				(unsigned int)sizeof(t_chunk)
 
-# define TINY							PAGE_SIZE * 4
-# define SMALL						PAGE_SIZE * 12
+# define TINY							PAGE_SIZE * 8
+# define SMALL						PAGE_SIZE * 16
+
+# define PAGE_TINY        TINY * 100
+# define PAGE_SMALL       SMALL * 100
+
+# define PAD              10
 
 # ifndef TRUE
 # 	define TRUE							1
