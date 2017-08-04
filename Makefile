@@ -36,8 +36,8 @@ ENDC				= \033[0m
 all: $(NAME)
 
 $(NAME): lib $(OBJ)
-	@ar -rcs $(NAME) $(OBJ)
-	@ranlib $(NAME)
+	ar -rcs $(NAME) $(OBJ)
+	ranlib $(NAME)
 	ln -sf libft_malloc_$(HOSTTYPE).so $(NAME_SLINK)
 	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
 
