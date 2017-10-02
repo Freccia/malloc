@@ -27,13 +27,13 @@
 // http://g.oswego.edu/dl/html/malloc.html
 // https://danluu.com/malloc-tutorial
 
-//#	define PAGE_SIZE				(unsigned int)getpagesize()
-#	define PAGE_SIZE				(unsigned int)sysconf(_SC_PAGESIZE)
-# define PAGE_META				(unsigned int)sizeof(t_page)
-# define CHUNK_META				(unsigned int)sizeof(t_chunk)
+//# define PAGE_SIZE        (unsigned int)getpagesize()
+# define PAGE_SIZE        (unsigned int)sysconf(_SC_PAGESIZE)
+# define PAGE_META        (unsigned int)sizeof(t_page)
+# define CHUNK_META       (unsigned int)sizeof(t_chunk)
 
-# define TINY							PAGE_SIZE * 8
-# define SMALL						PAGE_SIZE * 16
+# define TINY             PAGE_SIZE
+# define SMALL            PAGE_SIZE * 8
 
 # define PAGE_TINY        TINY * 100
 # define PAGE_SMALL       SMALL * 100
@@ -41,59 +41,59 @@
 # define PAD              10
 
 # ifndef TRUE
-# 	define TRUE							1
+#   define TRUE             1
 # endif
 # ifndef FALSE
-#		define FALSE						0
+#   define FALSE            0
 # endif
 
 /*
-**	Structures
+**  Structures
 */
 
 /*
-**	`t_chunk` represent the chunk's metadata in which 
-**		a t_page is divided.
+**  `t_chunk` represent the chunk's metadata in which 
+**    a t_page is divided.
 */
 
 /*
-**	`t_page` is the metadata about allocated area got by mmap.
-**		The pages's size is TINY, SMALL or LARGE,
-**			and it will be splitted in chunks.
+**  `t_page` is the metadata about allocated area got by mmap.
+**    The pages's size is TINY, SMALL or LARGE,
+**      and it will be splitted in chunks.
 */
 
-typedef struct	s_page		t_page;
-typedef struct	s_chunk		t_chunk;
+typedef struct  s_page    t_page;
+typedef struct  s_chunk   t_chunk;
 
-struct	s_chunk
+struct  s_chunk
 {
-	uint8_t				free;
-	size_t				size;
+  uint8_t       free;
+  size_t        size;
 };
 
-struct	s_page
+struct  s_page
 {
-  uint8_t				full;
-	size_t				size;
-	size_t				size_left;
-  t_page				*next;
-	t_chunk				first;
+  uint8_t       full;
+  size_t        size;
+  size_t        size_left;
+  t_page        *next;
+  t_chunk       first;
 };
 
 /*
-**	Globals
+**  Globals
 */
 
-t_page					*g_mem;
-extern t_page		*g_mem;
+t_page          *g_mem;
+extern t_page   *g_mem;
 
 /*
-**	Functions definitions
+**  Functions definitions
 */
 
-void						free(void *ptr);
-void						*malloc(size_t size);
-void						*realloc(void *ptr, size_t size);
-void						show_alloc_mem();
+void            free(void *ptr);
+void            *malloc(size_t size);
+void            *realloc(void *ptr, size_t size);
+void            show_alloc_mem();
 
 #endif
