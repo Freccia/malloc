@@ -55,4 +55,5 @@ malloc_test
 modules.order
 Module.symvers
 Mkfile.old
+test_malloc
 dkms.conf

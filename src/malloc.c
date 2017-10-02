@@ -13,11 +13,7 @@ t_page		*new_page(size_t page_size, size_t chunk_size)
     t_page			*new_page;
     t_chunk			*chunk;
 
-    ft_printf("TINY: %ld\n", TINY);
-    ft_printf("SMALL: %ld\n", SMALL);
-    ft_printf("PAGE_TINY: %ld\n", PAGE_TINY);
-    ft_printf("PAGE_SMALL: %ld\n", PAGE_SMALL);
-    new_page = mmap(NULL, page_size,
+    new_page = (t_page*)mmap(NULL, page_size,
             PROT_READ | PROT_WRITE,
             MAP_ANON | MAP_PRIVATE, -1, 0);
     if (new_page == MAP_FAILED)
@@ -59,14 +55,49 @@ int				add_new_page(size_t size)
     return (0);
 }
 
+void	dump_mem(void* mem, size_t size)
+{
+	size_t	i = 0;
+
+	while (i < size)
+	{
+		ft_printf("mem[%i]: %u\n", i, ((uint8_t*)mem)[i]);
+		++i;
+	}
+}
+
+void	dump_page(t_page *page)
+{
+	ft_printf("full: %d\n", page->full);
+	ft_printf("size: %d\n", page->size);
+	ft_printf("sizeL: %d\n", page->size_left);
+}
+
+void	dump_chunk(t_chunk *chunk)
+{
+	size_t i = 0;
+	ft_printf("free: %d\n", chunk->free);
+	ft_printf("size: %d\n", chunk->size);
+	while (i < chunk->size)
+	{
+		ft_printf("ch[%d]: %u ; ", i, ((uint8_t*)(chunk + CHUNK_META))[i]);
+		++i;
+	}
+}
+
 void			*find_free_chunk(size_t size, t_page *page)
 {
     t_chunk		*chunk;
     t_chunk     *tmp;
 
+//	dump_mem(page, PAGE_META);
     chunk = (t_chunk*)(page + PAGE_META);
+	dump_chunk(chunk);
+	dump_page(page);
+//	dump_mem((void*)chunk, CHUNK_META);
     if (chunk->free == TRUE && chunk->size >= size)
     {
+		// This and the nexxt block are the same
         chunk->free = FALSE;
         chunk->size = size;
         tmp = (t_chunk*)(chunk + CHUNK_META + size);
@@ -76,8 +107,9 @@ void			*find_free_chunk(size_t size, t_page *page)
     }
     while(chunk->free != TRUE)
     {
-        chunk = (t_chunk*)(chunk + chunk->size);
+        chunk = (t_chunk*)(chunk + CHUNK_META + chunk->size);
     }
+	// regroup into a function
     chunk->free = FALSE;
     chunk->size = size;
     tmp = (t_chunk*)(chunk + CHUNK_META + size);
