@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 15:41:30 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/04 21:54:21 by lfabbro          ###   ########.fr       */
+/*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
+/*   Updated: 2017/12/04 21:10:22 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include <stdio.h> //norme
 
-void	*malloc(size_t size)
+void		show_alloc_mem()
 {
-	void	*mem;
-	
-	mem = NULL;
-	if (size <= 0)
-		return (NULL);
-	else if (size <= TINY_SIZE)
-		mem = alloc_mem_tiny(size);
-	else if (size <= SMALL_SIZE)
-		mem = alloc_mem_small(size);
-	else
-		mem = alloc_mem_large(size + META_SIZE);
-	if (mem == MAP_FAILED)
-		return (NULL);
-	ft_putstr("NOTS\n");
-	return (mem);
+	t_meta	ptr;
+
+	ptr.data = 0;
+	return ;
 }
