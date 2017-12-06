@@ -3,9 +3,15 @@
 
 # Project executables
 malloc_test
+libft_malloc_x86_64_Darwin.so
+libft_malloc.so
+test
+test_malloc
 
 # Vim swap files
 .*.sw*
+.*sw*
+.sw*
 
 # Object files
 *.o
