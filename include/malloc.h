@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/06 11:31:15 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/06 19:11:52 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,17 @@
 # define MAP			MAP_ANON | MAP_PRIVATE
 
 /*
-** # define PAGE_SIZE		(unsigned int)sysconf(_SC_PAGESIZE) // Linux
+** # define PAGE_SIZE		(unsigned int)sysconf(_SC_PAGESIZE) // ** Linux **
 */
 # define PAGE_SIZE		(size_t)getpagesize()
 # define META_SIZE		(size_t)sizeof(t_meta)
 
 # define TINY_SIZE		(size_t)PAGE_SIZE * 2
 # define SMALL_SIZE		(size_t)PAGE_SIZE * 16
+
 # define TINY_AREA		(size_t)(TINY_SIZE + META_SIZE)
 # define SMALL_AREA		(size_t)(SMALL_SIZE + META_SIZE)
+
 # define TINY_ZONE		(size_t)(TINY_SIZE + META_SIZE) * 100
 # define SMALL_ZONE		(size_t)(SMALL_SIZE + META_SIZE) * 100
 
@@ -90,10 +92,12 @@ t_page          	g_mem;
 /*
  **  Functions prototypes
  */
-void            free(void *ptr);
-void            *malloc(size_t size);
+void            *ft_malloc(size_t size);
 void            *realloc(void *ptr, size_t size);
 //void			*calloc(size_t size);
+//
+void			put_pointer(void *ptr);
+void            ft_free(void *ptr);
 void            show_alloc_mem();
 
 /*
