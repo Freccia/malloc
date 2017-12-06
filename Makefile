@@ -40,6 +40,8 @@ $(NAME): lib $(OBJ)
 	ranlib $(NAME)
 	ln -sf libft_malloc_$(HOSTTYPE).so $(NAME_SLINK)
 	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
+	gcc -I include/ -I libft/libft/  -o test_malloc src/main.c -L libft -L . -lft -lft_malloc
+	@printf "$(GREEN) Compiled test_malloc $(ENDC)\n"
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(INC)
