@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/04 21:41:31 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/06 11:32:31 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME_TEST	= malloc_test
 SRC_TEST	= main.c
 SRC_T		= $(addprefix $(SRC_PATH),$(SRC_TEST))
 
-SRC_NAME	= malloc.c alloc_mem.c show_alloc_mem.c utils.c
+SRC_NAME	= malloc.c free.c alloc_mem.c show_alloc_mem.c utils.c
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LIB_NAME	= -lft -lft_malloc
 
@@ -45,10 +45,10 @@ ENDC		= \033[0m
 
 .PHONY: all lib clean fclean re libfclean libclean
 
-all: $(NAME)
+all: lib $(NAME)
 
 $(NAME): $(OBJ)
-	@make -s -C $(LIB_PATH)
+	#@make -s -C $(LIB_PATH)
 	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
 	$(CC) $(CFLAGS) -shared -o $@ $(OBJ) $(INC) $(LIB) -lft
 	ln -sf $(NAME) $(NAME_SLINK)
@@ -59,8 +59,8 @@ $(NAME): $(OBJ)
 test:
 	@printf "$(GREEN) Make $(NAME_TEST) $(ENDC)\n"
 	gcc -I include/ -I libft/libft/  -o test_malloc src/main.c -L libft -L . -lft -lft_malloc
-	@printf "$(GREEN) Compiled test_malloc $(ENDC)\n"
-	$(CC) $(CFLAGS) $(INC) $(SRC_T) -o $(NAME_TEST) $(LIB) $(LIB_NAME)
+#	@printf "$(GREEN) Compiled test_malloc $(ENDC)\n"
+#	$(CC) $(CFLAGS) $(INC) $(SRC_T) -o $(NAME_TEST) $(LIB) $(LIB_NAME)
 
 clean:
 	@printf "$(RED) Removing $(NAME) objects $(ENDC)\n"
@@ -81,5 +81,5 @@ libclean:
 libfclean:
 	@make -C ./libft fclean
 
-re: fclean
-	@make all
+re: fclean all
+	#@make all

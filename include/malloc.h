@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/04 20:57:06 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/06 11:31:15 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 ** # define PAGE_SIZE		(unsigned int)sysconf(_SC_PAGESIZE) // Linux
 */
 # define PAGE_SIZE		(size_t)getpagesize()
-# define META_SIZE		sizeof(t_meta)
+# define META_SIZE		(size_t)sizeof(t_meta)
 
 # define TINY_SIZE		(size_t)PAGE_SIZE * 2
 # define SMALL_SIZE		(size_t)PAGE_SIZE * 16
@@ -108,6 +108,7 @@ void			*alloc_mem_large(size_t size);
 /*
 **	Utils
 */
+void			init_first_chunk(t_meta **mem, size_t size);
 t_meta			*find_free_chunk(t_meta *mem, size_t size);
 void			update_last_chunk(t_meta **last, t_meta *mem);
 void			update_meta_info(t_meta **mem, size_t chunk_size);
