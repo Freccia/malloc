@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/06 11:32:31 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/06 19:43:46 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,6 @@ ENDC		= \033[0m
 all: lib $(NAME)
 
 $(NAME): $(OBJ)
-	#@make -s -C $(LIB_PATH)
 	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
 	$(CC) $(CFLAGS) -shared -o $@ $(OBJ) $(INC) $(LIB) -lft
 	ln -sf $(NAME) $(NAME_SLINK)
@@ -59,8 +58,6 @@ $(NAME): $(OBJ)
 test:
 	@printf "$(GREEN) Make $(NAME_TEST) $(ENDC)\n"
 	gcc -I include/ -I libft/libft/  -o test_malloc src/main.c -L libft -L . -lft -lft_malloc
-#	@printf "$(GREEN) Compiled test_malloc $(ENDC)\n"
-#	$(CC) $(CFLAGS) $(INC) $(SRC_T) -o $(NAME_TEST) $(LIB) $(LIB_NAME)
 
 clean:
 	@printf "$(RED) Removing $(NAME) objects $(ENDC)\n"
@@ -82,4 +79,3 @@ libfclean:
 	@make -C ./libft fclean
 
 re: fclean all
-	#@make all

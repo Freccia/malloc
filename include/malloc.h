@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/06 19:11:52 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/06 19:43:11 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct  s_meta	t_meta;
 
 struct  s_meta
 {
-	//t_list		next;
 	t_meta		*next;
 	uint8_t		free;
 	size_t		size;
@@ -95,8 +94,6 @@ t_page          	g_mem;
 void            *ft_malloc(size_t size);
 void            *realloc(void *ptr, size_t size);
 //void			*calloc(size_t size);
-//
-void			put_pointer(void *ptr);
 void            ft_free(void *ptr);
 void            show_alloc_mem();
 
