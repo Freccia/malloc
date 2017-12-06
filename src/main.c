@@ -25,22 +25,28 @@ int main(int ac, char **av)
 		ft_printf("SMALL_SIZE: %ld\n", SMALL_SIZE);
 		ft_printf("TINY_ZONE: %ld\n", TINY_ZONE);
 		ft_printf("SMALL_ZONE: %ld\n", SMALL_ZONE);
+		ft_putendl("----------------------------------");
+		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
-		char *heap_chunk = malloc(18);
-
-		ft_putstr("Writing to allocated space...\n");
-		heap_chunk = strcpy(heap_chunk, "SDACLOLOLOLOLOLFRG");
-
-		ft_putstr("Reading from allocated space...\n");
-		ft_printf("%s\n", heap_chunk);
+		char *heap_chunk = ft_malloc(18);
 
 		ft_putendl("----------------------------------");
 		show_alloc_mem();
 		ft_putendl("----------------------------------");
 
+		ft_putstr("Writing to allocated space...\n");
+		heap_chunk = strcpy(heap_chunk, "0123456789abcdefgh");
+
+		ft_putstr("Reading from allocated space...\n");
+		ft_printf("%s\n", heap_chunk);
+
 		ft_putstr("Allocating space...\n");
-		heap_chunk = malloc(200);
+		heap_chunk = ft_malloc(200);
+
+		ft_putendl("----------------------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------------------");
 
 		ft_putstr("Writing to allocated space...\n");
 		heap_chunk = strcpy(heap_chunk, "LOLOLOLOLOLOLOLOLO\
@@ -53,9 +59,19 @@ LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 		show_alloc_mem();
 		ft_putendl("----------------------------------");
 
+		ft_putstr("Allocating space...\n");
+		char *heap_chunk2 = ft_malloc(9000);
+		ft_putstr("Writing to allocated space...\n");
+		heap_chunk = strcpy(heap_chunk2, "LOLOLOLOLOLOLOLOLO\
+LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
+		ft_putstr("Reading from allocated space...\n");
+		ft_printf("%s\n", heap_chunk2);
+		ft_putendl("----------------------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------------------");
 
 		ft_putstr("Freeing allocated space\n");
-		free(heap_chunk);
+		ft_free(heap_chunk);
 
 		ft_putendl("----------------------------------");
 		show_alloc_mem();

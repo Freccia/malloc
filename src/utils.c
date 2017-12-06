@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 18:26:12 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/06 11:40:30 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:38:01 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ void		update_last_chunk(t_meta **last, t_meta *mem)
 {
 	if (!*last)
 	{
-		ft_putendl("UP first.");
 		*last = mem;
 	}
 	else
 	{
-		ft_putendl("UP second.");
 		(*last)->next = mem;
 		*last = mem;
 	}
@@ -56,7 +54,7 @@ void		update_meta_info(t_meta **mem, size_t chunk_size)
 	ptr = *mem;
 	next = ptr->next ? ptr->next : NULL;
 	ptr->free = 0;
-	ptr->data = mem + 1;//(void*)mem + META_SIZE;
+	ptr->data = *mem + 1;//(void*)mem + META_SIZE;
 	if ((ptr->size - chunk_size - META_SIZE) > META_SIZE)
 	{
 		ptr->next = (void*)ptr + chunk_size + META_SIZE;

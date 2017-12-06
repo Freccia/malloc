@@ -6,14 +6,14 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:41:30 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/06 10:35:54 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:32:59 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <stdio.h> //norme
 
-void	*malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
 	void	*mem;
 	
