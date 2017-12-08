@@ -29,8 +29,8 @@ int main(int ac, char **av)
 		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
-		char *heap_chunk = ft_malloc(10000);
-		char *heap_chunk3 = ft_malloc(10000);
+		char *heap_chunk = malloc(10000);
+		char *heap_chunk3 = malloc(10000);
 
 		ft_putstr("Writing to allocated space...\n");
 		heap_chunk = strcpy(heap_chunk, "0123456789abcdefgh");
@@ -43,7 +43,7 @@ int main(int ac, char **av)
 		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
-		char *heap_chunk4 = ft_malloc(20000);
+		char *heap_chunk4 = malloc(20000);
 
 		ft_putstr("Writing to allocated space...\n");
 		strcpy(heap_chunk, "LOLOLOLOLOLOLOLOLO\
@@ -57,7 +57,7 @@ LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
-		char *heap_chunk2 = ft_malloc(SMALL_ZONE);
+		char *heap_chunk2 = malloc(SMALL_ZONE);
 		ft_putstr("Writing to allocated space...\n");
 		ft_memset(heap_chunk2, 90, 90);
 		ft_putstr("Reading from allocated space...\n");
@@ -67,10 +67,10 @@ LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 		ft_putendl("----------------------------------");
 
 		ft_putstr("Freeing allocated space\n");
-		ft_free(heap_chunk);
-		ft_free(heap_chunk2);
-		ft_free(heap_chunk3);
-		ft_free(heap_chunk4);
+		free(heap_chunk);
+		free(heap_chunk2);
+		free(heap_chunk3);
+		free(heap_chunk4);
 
 		ft_putendl("----------------------------------");
 		show_alloc_mem();

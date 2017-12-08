@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 18:40:24 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 19:01:40 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ t_page          	g_mem;
 /*
  **  Functions prototypes
  */
-void			*ft_malloc(size_t size);
-void			*ft_realloc(void *ptr, size_t size);
+void			*malloc(size_t size);
+void			*realloc(void *ptr, size_t size);
 //void			*calloc(size_t size);
-void			ft_free(void *ptr);
+void			free(void *ptr);
 void			show_alloc_mem();
 
 /*
