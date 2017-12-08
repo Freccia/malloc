@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/06 19:43:11 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 18:40:24 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,15 @@ t_page          	g_mem;
 /*
  **  Functions prototypes
  */
-void            *ft_malloc(size_t size);
-void            *realloc(void *ptr, size_t size);
+void			*ft_malloc(size_t size);
+void			*ft_realloc(void *ptr, size_t size);
 //void			*calloc(size_t size);
-void            ft_free(void *ptr);
-void            show_alloc_mem();
+void			ft_free(void *ptr);
+void			show_alloc_mem();
 
 /*
 **	Alloc_mem
 */
-t_meta			*mmap_zone_tiny();
-t_meta			*mmap_zone_small();
 void			*alloc_mem_tiny(size_t size);
 void			*alloc_mem_small(size_t size);
 void			*alloc_mem_large(size_t size);
@@ -109,8 +107,10 @@ void			*alloc_mem_large(size_t size);
 /*
 **	Utils
 */
+void			join_free_chunks();
 void			init_first_chunk(t_meta **mem, size_t size);
 t_meta			*find_free_chunk(t_meta *mem, size_t size);
+t_meta			*find_memory_chunk(void *ptr);
 void			update_last_chunk(t_meta **last, t_meta *mem);
 void			update_meta_info(t_meta **mem, size_t chunk_size);
 
