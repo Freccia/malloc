@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:14:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 19:12:13 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:16:39 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	join_free_chunks_list(t_meta **list, t_meta **last)
 			ptr->next = next->next;
 		}
 		else
-			ptr->next = next;
+			ptr = next;
 	}
 	*last = ptr;
 }

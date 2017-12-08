@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 18:26:12 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 17:00:59 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:17:51 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@ void		init_first_chunk(t_meta **mem, size_t size)
 	(*mem)->data = (*mem) + META_SIZE;
 }
 
-void		update_last_chunk(t_meta **last, t_meta *mem)
-{
-	if (!*last)
-	{
-		*last = mem;
-	}
-	else
-	{
-		(*last)->next = mem;
-		*last = mem;
-	}
-}
-
 void		update_meta_info(t_meta **mem, size_t chunk_size)
 {
 	t_meta	*ptr;
@@ -42,21 +29,15 @@ void		update_meta_info(t_meta **mem, size_t chunk_size)
 	ptr = *mem;
 	next = ptr->next ? ptr->next : NULL;
 	ptr->free = 0;
-	ptr->data = *mem + 1;//(void*)mem + META_SIZE;
-	if ((long)(ptr->size - chunk_size - META_SIZE) > 0)
+	ptr->data = (void*)*mem + META_SIZE;
+	if ((long)(ptr->size - chunk_size - META_SIZE) > (long)META_SIZE)
 	{
-		//ft_putnbr(ptr->size);
-		//ft_putstr(" - ");
-		//ft_putnbr(chunk_size);
-		//ft_putstr(" - ");
-		//ft_putnbr(META_SIZE);
-		//ft_putstr("\n");
 		ptr->next = (void*)ptr + chunk_size + META_SIZE;
 		ptr2 = ptr->next;
 		ptr2->size = ptr->size - chunk_size - META_SIZE;
 		ptr->size = chunk_size;
 		ptr2->free = 1;
-		ptr2->data = ptr2 + 1;//(void*)ptr2 + META_SIZE;
+		ptr2->data = (void*)ptr2 + META_SIZE;
 		ptr2->next = next;
 	}
 }

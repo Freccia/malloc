@@ -6,30 +6,11 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 19:08:40 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:07:14 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
-void		put_hexa(unsigned long h)
-{
-	const char *hex = "0123456789abcdef";
-
-	if (h >= 16)
-	{
-		put_hexa(h / 16);
-		put_hexa(h % 16);
-	}
-	else
-		ft_putchar(hex[h]);
-}
-
-void		put_pointer(void *ptr)
-{
-	ft_putstr("0x");
-	put_hexa((unsigned long)ptr);
-}
 
 size_t		print_memory(t_meta *list, char *str)
 {
@@ -39,19 +20,24 @@ size_t		print_memory(t_meta *list, char *str)
 	if (list)
 	{
 		ft_putstr(str);
-		put_pointer(list);
+		ft_putptr(list);
 		ft_putchar('\n');
 	}
 	while (list)
 	{
 		if (list->free == 0)
 		{
-			put_pointer(list->data);
+			ft_putptr(list->data);
 			ft_putstr(" - ");
-			put_pointer((void*)list->data + list->size);
+			ft_putptr((void*)list->data + list->size);
 			ft_putstr(" : ");
 			ft_putnbr(list->size);
-			ft_putendl(" octets");
+			ft_putstr(" octets");
+			ft_putstr(" : ");
+			ft_putnbr(list->free);
+			ft_putstr(" : ");
+			ft_putptr(list->next);
+			ft_putstr("\n");
 			tot += list->size;
 		}
 		list = list->next;
