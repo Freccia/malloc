@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:05:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 19:11:39 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:15:16 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ void			*alloc_mem_tiny(size_t size)
 	{
 		mem = mmap_zone_tiny();
 		update_meta_info(&mem, size);
-		update_last_chunk(&(g_mem.tiny_last), mem);
+		g_mem.tiny_last = mem;
 		return (mem->data);	
 	}
 	update_meta_info(&mem, size);
-	update_last_chunk(&(g_mem.tiny_last), mem);
+	g_mem.tiny_last = mem;
 	return (mem->data);
 }
 
@@ -72,11 +72,11 @@ void			*alloc_mem_small(size_t size)
 	{
 		mem = mmap_zone_small();
 		update_meta_info(&mem, size);
-		update_last_chunk(&(g_mem.small_last), mem);
+		g_mem.small_last = mem;
 		return (mem->data);	
 	}
 	update_meta_info(&mem, size);
-	update_last_chunk(&(g_mem.small_last), mem);
+	g_mem.small_last = mem;
 	return (mem->data);
 }
 
@@ -90,7 +90,7 @@ void			*alloc_mem_large(size_t size)
 		mem->free = 0;
 		mem->size = size;
 		mem->data = mem + 1;
-		update_last_chunk(&(g_mem.large_last), mem);
+		g_mem.large_last = mem;
 		return (mem->data);
 	}
 	if ((mem = (t_meta*)mmap(0, size, PROT, MAP, -1, 0)) == MAP_FAILED)
@@ -99,7 +99,7 @@ void			*alloc_mem_large(size_t size)
 	mem->free = 0;
 	mem->size = size;
 	mem->data = mem + 1;
-	update_last_chunk(&(g_mem.large_last), mem);
+	g_mem.large_last = mem;
 	if (g_mem.large == NULL)
 		g_mem.large = mem;
 	return (mem->data);

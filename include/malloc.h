@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 19:01:40 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:15:31 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void			join_free_chunks();
 void			init_first_chunk(t_meta **mem, size_t size);
 t_meta			*find_free_chunk(t_meta *mem, size_t size);
 t_meta			*find_memory_chunk(void *ptr);
-void			update_last_chunk(t_meta **last, t_meta *mem);
 void			update_meta_info(t_meta **mem, size_t chunk_size);
 
 #endif

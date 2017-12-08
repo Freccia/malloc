@@ -12,6 +12,7 @@ int main()
   char *addr;
 
   addr = malloc(16);
+  print("IN\n");
   free(NULL);
   free((void *)addr + 5);
   if (realloc((void *)addr + 5, 10) == NULL)

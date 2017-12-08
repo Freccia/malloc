@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 19:08:01 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:16:43 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	*resize_allocation(t_meta *ptr, size_t size)
 {
-	t_meta	*tmp;
+	void	*mem;
 	t_meta	*next;
 
 	next = ptr->next ? ptr->next : NULL;
@@ -25,28 +25,30 @@ static void	*resize_allocation(t_meta *ptr, size_t size)
 		ptr->next = next->next;	
 		return ((void*)ptr);
 	}
-	tmp = ptr;
-	if ((ptr = malloc(size)) == NULL)
+	if ((mem = malloc(size)) == NULL)
 		return (NULL);
-	memcpy(ptr->data, tmp->data, tmp->size);
-	free(tmp);
-	return (ptr);
+	ft_memmove(mem, ptr->data, ptr->size);
+	free(ptr);
+	return (mem);
 }
 
 void		*realloc(void *ptr, size_t size)
 {
-	t_meta	*old;
+	t_meta	*real_ptr;
 
 	if (ptr == NULL)
-		return (malloc(size));
-	if ((old = find_memory_chunk(ptr)) == NULL)
-		return (malloc(size));
-	old = old->next;
-	if ((ptr != NULL && size == 0) || old->size > size)
 	{
-		old->free = 1;
+		return (malloc(size));
+	}
+	if ((real_ptr = find_memory_chunk(ptr)) == NULL)
+	{
+		return (malloc(size));
+	}
+	if ((ptr != NULL && size == 0) || real_ptr->size > size)
+	{
+		real_ptr->free = 1;
 		return (malloc(size));
 	}
 	join_free_chunks();
-	return(resize_allocation(old, size));
+	return(resize_allocation(real_ptr, size));
 }
