@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:14:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 18:42:45 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 19:12:13 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,18 @@ static void	unmap_large_zone(void *ptr)
 		if ((void*)tmp->next == ptr)
 		{
 			tmp->next = tmp->next->next;
-			if (munmap(tmp->next, tmp->next->size))
-				ft_putendl_fd("Error: unmapping page failed.", 2);
+			munmap(tmp->next, tmp->next->size);
+			// TODO check if ok
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
 
-void		ft_free(void *ptr)
+void		free(void *ptr)
 {
 	t_meta 	*tmp;
 
-	ft_putstr("FREE \n");
 	if (!ptr)
 		return ;
 	tmp = find_memory_chunk(ptr);	

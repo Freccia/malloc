@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 18:40:30 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 19:08:01 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ static void	*resize_allocation(t_meta *ptr, size_t size)
 	return (ptr);
 }
 
-void		*ft_realloc(void *ptr, size_t size)
+void		*realloc(void *ptr, size_t size)
 {
 	t_meta	*old;
 
-	ft_putstr("REALLOC! ");
 	if (ptr == NULL)
 		return (malloc(size));
 	if ((old = find_memory_chunk(ptr)) == NULL)
