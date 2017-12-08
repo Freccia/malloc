@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:07:14 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/08 22:39:55 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ size_t		print_memory(t_meta *list, char *str)
 			ft_putptr((void*)list->data + list->size);
 			ft_putstr(" : ");
 			ft_putnbr(list->size);
-			ft_putstr(" octets");
-			ft_putstr(" : ");
-			ft_putnbr(list->free);
-			ft_putstr(" : ");
-			ft_putptr(list->next);
-			ft_putstr("\n");
+			ft_putendl(" octets");
 			tot += list->size;
 		}
 		list = list->next;
