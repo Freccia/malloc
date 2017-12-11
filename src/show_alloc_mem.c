@@ -6,18 +6,46 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:39:55 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/11 19:17:55 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-size_t		print_memory(t_meta *list, char *str)
+static size_t	print_memory_ex(t_meta *list, char *str, size_t tot)
+{
+	if (list && str)
+	{
+		ft_putstr(str);
+		ft_putptr(list);
+		ft_putchar('\n');
+	}
+	while (list)
+	{
+		if (list->free == 0)
+		{
+			ft_putptr(list->data);
+			ft_putstr(" - ");
+			ft_putptr((void*)list->data + list->size);
+			ft_putstr(" : ");
+			ft_putnbr(list->size);
+			ft_putendl(" octets");
+			ft_putendl("Data: ");
+			ft_print_memory(list->data, list->size);
+			ft_putchar('\n');
+			tot += list->size;
+		}
+		list = list->next;
+	}
+	return (tot);
+}
+
+static size_t	print_memory(t_meta *list, char *str)
 {
 	size_t		tot;
 
 	tot = 0;
-	if (list)
+	if (list && str)
 	{
 		ft_putstr(str);
 		ft_putptr(list);
@@ -40,10 +68,11 @@ size_t		print_memory(t_meta *list, char *str)
 	return (tot);
 }
 
-void		show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
 	size_t		tot;
 
+	pthread_mutex_lock(&g_mutex);
 	tot = 0;
 	tot += print_memory(g_mem.tiny, "TINY: ");
 	tot += print_memory(g_mem.small, "SMALL: ");
@@ -51,4 +80,20 @@ void		show_alloc_mem(void)
 	ft_putstr("total: ");
 	ft_putnbr(tot);
 	ft_putendl(" octets");
+	pthread_mutex_unlock(&g_mutex);
+}
+
+void			show_alloc_mem_ex(void)
+{
+	size_t		tot;
+
+	pthread_mutex_lock(&g_mutex);
+	tot = 0;
+	tot += print_memory_ex(g_mem.tiny, "TINY: ", 0);
+	tot += print_memory_ex(g_mem.small, "SMALL: ", 0);
+	tot += print_memory_ex(g_mem.large, "LARGE: ", 0);
+	ft_putstr("total: ");
+	ft_putnbr(tot);
+	ft_putendl(" octets");
+	pthread_mutex_unlock(&g_mutex);
 }

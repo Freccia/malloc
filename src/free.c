@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:14:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:16:39 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/11 15:56:14 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	unmap_large_zone(void *ptr)
 	}
 }
 
-void		free(void *ptr)
+static void	ft_free(void *ptr)
 {
 	t_meta 	*tmp;
 
@@ -72,4 +72,11 @@ void		free(void *ptr)
 		unmap_large_zone(tmp);
 	if (tmp)
 		tmp->free = 1;
+}
+
+void		free(void *ptr)
+{
+	pthread_mutex_lock(&g_mutex);
+	ft_free(ptr);
+	pthread_mutex_unlock(&g_mutex);
 }

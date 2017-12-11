@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:16:43 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/11 16:09:17 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	*resize_allocation(t_meta *ptr, size_t size)
 	return (mem);
 }
 
-void		*realloc(void *ptr, size_t size)
+static void		*ft_realloc(void *ptr, size_t size)
 {
 	t_meta	*real_ptr;
 
@@ -51,4 +51,14 @@ void		*realloc(void *ptr, size_t size)
 	}
 	join_free_chunks();
 	return(resize_allocation(real_ptr, size));
+}
+
+void		*realloc(void *ptr, size_t size)
+{
+	t_meta	*ptr_re;
+
+	pthread_mutex_lock(&g_mutex);
+	ptr_re = ft_realloc(ptr, size);
+	pthread_mutex_lock(&g_mutex);
+	return (ptr_re);
 }
