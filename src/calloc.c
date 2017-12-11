@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   calloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 15:41:30 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/11 16:32:47 by lfabbro          ###   ########.fr       */
+/*   Created: 2017/12/11 15:09:19 by lfabbro           #+#    #+#             */
+/*   Updated: 2017/12/11 16:09:52 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void	*malloc(size_t size)
+void	*calloc(size_t count, size_t size)
 {
-	void	*mem;
-	
+	t_meta	*mem;
+	size_t	tot_size;
+
 	pthread_mutex_lock(&g_mutex);
-	if (size <= 0)
+	tot_size = count * size;
+	if ((mem = malloc(tot_size)) == NULL)
 	{
 		pthread_mutex_unlock(&g_mutex);
 		return (NULL);
 	}
-	else if (size <= TINY_SIZE)
-		mem = alloc_mem_tiny(size);
-	else if (size <= SMALL_SIZE)
-		mem = alloc_mem_small(size);
-	else
-		mem = alloc_mem_large(size + META_SIZE);
-	if (mem == MAP_FAILED)
-	{
-		pthread_mutex_unlock(&g_mutex);
-		return (NULL);
-	}
+	ft_memset(mem, 0, tot_size);
 	pthread_mutex_unlock(&g_mutex);
 	return (mem);
 }

@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/08 15:36:29 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/11 18:41:34 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,12 @@ endif
 NAME		= libft_malloc_$(HOSTTYPE).so
 NAME_SLINK	= libft_malloc.so
 
-NAME_TEST	= malloc_test
+NAME_TEST	= test_malloc
 SRC_TEST	= main.c
 SRC_T		= $(addprefix $(SRC_PATH),$(SRC_TEST))
 
-SRC_NAME	= malloc.c free.c realloc.c find.c alloc_mem.c show_alloc_mem.c utils.c
+SRC_NAME	= malloc.c free.c realloc.c calloc.c find.c alloc_mem.c \
+			  show_alloc_mem.c utils.c
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LIB_NAME	= -lft -lft_malloc
 
@@ -39,35 +40,41 @@ INC 		= $(addprefix -I ,$(INC_PATH))
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
-RED			= \033[31m
-GREEN		= \033[32m
+RED			= \033[0;31m
+GREEN		= \033[0;32m
+WHITE		= \033[1;37m
 ENDC		= \033[0m
 
-.PHONY: all lib clean fclean re libfclean libclean
+.PHONY: all clean fclean re lib libclean libfclean norme
 
 all: lib $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "$(GREEN) Make $(NAME) $(ENDC)\n"
+	@printf "$(WHITE) Making malloc $(ENDC)\n"
 	$(CC) $(CFLAGS) -shared -o $@ $(OBJ) $(INC) $(LIB) -lft
 	ln -sf $(NAME) $(NAME_SLINK)
+	@printf "$(WHITE) [ $(GREEN)OK $(WHITE)] $(NAME) $(ENDC)\n"
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 test:
-	@printf "$(GREEN) Make $(NAME_TEST) $(ENDC)\n"
-	gcc -I include/ -I libft/libft/  -o test_malloc src/main.c -L libft -L . -lft -lft_malloc
+	@printf "$(White) Making $(NAME_TEST) $(ENDC)\n"
+	$(CC) -I include/ -I libft/libft/ -o $(NAME_TEST) src/main.c -L libft -L. -lft -lft_malloc
+	$(CC) -o test1 ./tests/test1.c
+	$(CC) -o test2 ./tests/test2.c
+	$(CC) -o test3 ./tests/test3.c
+	$(CC) -o test4 ./tests/test4.c
+	$(CC) -o test5 ./tests/test5.c
+	$(CC) -o test6 ./tests/test6.c -L. -lft_malloc 
+	$(CC) -o test7 ./tests/test7.c -L. -lft_malloc 
 
 clean:
-	@printf "$(RED) Removing $(NAME) objects $(ENDC)\n"
-	@rm -rfv $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
+	@rm -rf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
 
 fclean: clean libfclean
-	@printf "$(RED) Removing $(NAME) $(ENDC)\n"
-	@printf "$(RED) Removing $(NAME_SLINK) $(ENDC)\n"
-	@printf "$(RED) Removing $(NAME_TEST) $(ENDC)\n"
-	@rm -fv $(NAME) $(NAME_SLINK) $(NAME_TEST)
+	@rm -fv $(NAME) $(NAME_SLINK) $(NAME_TEST) test[0-9]
+	@printf "$(WHITE) [ $(RED)REMOVED $(WHITE)] $(NAME) $(ENDC)\n"
 
 lib:
 	@make -C ./libft
@@ -79,3 +86,7 @@ libfclean:
 	@make -C ./libft fclean
 
 re: fclean all
+
+norme :
+	@printf "$(WHITE) Norminette $(ENDC)\n"
+	norminette **/*.[ch]

@@ -6,29 +6,31 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:15:31 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/11 21:18:44 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
- **
- ** Chaque zone doit pouvoir contenir au moins 100 allocations.
- **     - Les mallocs “TINY”, de 1 à n octets, 
- **        seront stockés dans des zones de N octets
- **     - Les mallocs “SMALL”, de (n+1) à m octets,
- **        seront stockés dans des zones de M octets
- **     - Les mallocs “LARGE”, de (m+1) octets et plus,
- **        seront stockés hors zone, c’est à dire simplement
- **        avec un mmap(), ils seront en quelquesorte une 
- **        zone à eux tout seul.
- **
- */
+**
+** Chaque zone doit pouvoir contenir au moins 100 allocations.
+**     - Les mallocs “TINY”, de 1 à n octets, 
+**        seront stockés dans des zones de N octets
+**     - Les mallocs “SMALL”, de (n+1) à m octets,
+**        seront stockés dans des zones de M octets
+**     - Les mallocs “LARGE”, de (m+1) octets et plus,
+**        seront stockés hors zone, c’est à dire simplement
+**        avec un mmap(), ils seront en quelquesorte une 
+**        zone à eux tout seul.
+**
+*/
 
-// Useful:
-// http://g.oswego.edu/dl/html/malloc.html
-// https://danluu.com/malloc-tutorial
-// https://www.cocoawithlove.com/2010/05/look-at-how-malloc-works-on-mac.html
-// http://manpagesfr.free.fr/man/man2/mmap.2.html
+/*
+** Useful:
+** http://g.oswego.edu/dl/html/malloc.html
+** https://danluu.com/malloc-tutorial
+** https://www.cocoawithlove.com/2010/05/look-at-how-malloc-works-on-mac.html
+** http://manpagesfr.free.fr/man/man2/mmap.2.html
+*/
 
 #ifndef MALLOC_H
 # define MALLOC_H
@@ -38,7 +40,7 @@
 # include <sys/mman.h>
 # include <unistd.h>
 # include "libft.h"
-//# include <pthread.h>
+# include <pthread.h>
 
 # define PROT			PROT_READ | PROT_WRITE
 # define MAP			MAP_ANON | MAP_PRIVATE
@@ -58,9 +60,13 @@
 # define TINY_ZONE		(size_t)(TINY_SIZE + META_SIZE) * 100
 # define SMALL_ZONE		(size_t)(SMALL_SIZE + META_SIZE) * 100
 
+# ifndef errno
+ # define errno			0
+# endif
+
 /*
- **  Structures
- */
+**  Structures
+*/
 typedef struct  s_page	t_page;
 typedef struct  s_meta	t_meta;
 
@@ -86,16 +92,17 @@ struct  s_page
  **  Globals
  */
 t_page          	g_mem;
-//pthread_mutex_t		g_mem_mutex;
+pthread_mutex_t		g_mutex;
 
 /*
  **  Functions prototypes
  */
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
-//void			*calloc(size_t size);
+void			*calloc(size_t count, size_t size);
 void			free(void *ptr);
-void			show_alloc_mem();
+void			show_alloc_mem(void);
+void			show_alloc_mem_ex(void);
 
 /*
 **	Alloc_mem
