@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 14:03:03 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 15:02:56 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ static void		*ft_realloc(void *ptr, size_t size)
 	{
 		return (malloc(size));
 	}
-	if ((real_ptr = find_memory_chunk(ptr)) == NULL)
+	if ((real_ptr = find_memory_chunk(ptr)) == NULL ||
+			(real_ptr && real_ptr->free))
 	{
-		return (malloc(size));
+		return (NULL);
 	}
 	if ((ptr != NULL && size == 0) || real_ptr->size > size)
 	{
