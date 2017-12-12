@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/12 11:44:58 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/12 15:15:16 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC_TEST	= main.c
 SRC_T		= $(addprefix $(SRC_PATH),$(SRC_TEST))
 
 SRC_NAME	= malloc.c free.c realloc.c calloc.c find.c alloc_mem.c \
-			  show_alloc_mem.c utils.c
+			  memalign.c show_alloc_mem.c utils.c
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LIB_NAME	= -lft -lft_malloc
 
@@ -69,6 +69,8 @@ test:
 	$(CC) -o test5 ./tests/test5.c
 	$(CC) -o test6 ./tests/test6.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test7 ./tests/test7.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test8 ./tests/test8.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test9 ./tests/test9.c -I include/ -I libft/libft/ -L. -lft_malloc 
 
 clean:
 	@rm -rf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o

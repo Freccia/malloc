@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:05:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 13:58:46 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 14:52:20 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			*alloc_mem_large(size_t size)
 	{
 		mem->next = NULL;
 		mem->free = 0;
-		mem->size = size;
+		mem->size = size - META_SIZE;
 		mem->data = mem + 1;
 		g_mem.large_last = mem;
 		return (mem->data);
@@ -83,7 +83,7 @@ void			*alloc_mem_large(size_t size)
 		return (NULL);
 	mem->next = NULL;
 	mem->free = 0;
-	mem->size = size;
+	mem->size = size - META_SIZE;
 	mem->data = mem + 1;
 	if (g_mem.large_last)
 		g_mem.large_last->next = mem;

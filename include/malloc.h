@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 14:16:33 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 15:15:59 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ pthread_mutex_t			g_mutex;
 void					*malloc(size_t size);
 void					*realloc(void *ptr, size_t size);
 void					*calloc(size_t count, size_t size);
+void					*memalign(size_t align, size_t size);
 void					free(void *ptr);
 void					show_alloc_mem(void);
 void					show_alloc_mem_ex(void);
