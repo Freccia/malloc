@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 15:15:59 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 16:51:01 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,25 @@
 # define TINY_ZONE		(size_t)(TINY_SIZE + META_SIZE) * 100
 # define SMALL_ZONE		(size_t)(SMALL_SIZE + META_SIZE) * 100
 
+# define TYPE_MALLOC	1
+# define TYPE_CALLOC	2
+# define TYPE_REALLOC	4
+# define TYPE_FREE		8
+
 /*
 **  Structures
 */
 typedef struct s_page	t_page;
 typedef struct s_meta	t_meta;
+typedef struct s_alloc	t_alloc;
+
+struct					s_alloc
+{
+	t_alloc				*next;
+	uint8_t				type;
+	size_t				size;
+	size_t				space_left;
+};
 
 struct					s_meta
 {
@@ -88,6 +102,7 @@ struct					s_page
 */
 t_page					g_mem;
 pthread_mutex_t			g_mutex;
+t_alloc					*g_history;
 
 /*
 **  Functions prototypes
