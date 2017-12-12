@@ -6,45 +6,27 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:05:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:15:16 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 13:58:46 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static t_meta	*mmap_zone_tiny()
+static t_meta	*mmap_zone(t_meta **g_zone, size_t zone_size)
 {
 	t_meta	*mem;
 
-	if (!g_mem.tiny)
+	if (!*g_zone)
 	{
-		if ((g_mem.tiny = (t_meta*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
+		if ((*g_zone = (t_meta*)mmap(0, zone_size, PROT, MAP, -1, 0))
 				== MAP_FAILED)
 			return (NULL);
-		g_mem.tiny->size = TINY_ZONE - META_SIZE;
-		return (g_mem.tiny);
+		(*g_zone)->size = zone_size - META_SIZE;
+		return (*g_zone);
 	}
-	if ((mem = (t_meta*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0)) == MAP_FAILED)
-			return (NULL);
-	mem->size = TINY_ZONE - META_SIZE;
-	return (mem);
-}
-
-static t_meta	*mmap_zone_small()
-{
-	t_meta	*mem;
-
-	if (!g_mem.small)
-	{
-		if ((g_mem.small = (t_meta*)mmap(0, SMALL_ZONE, PROT, MAP, -1, 0))
-				== MAP_FAILED)
-			return (NULL);
-		g_mem.small->size = SMALL_ZONE - META_SIZE;
-		return (g_mem.small);
-	}
-	if ((mem = (t_meta*)mmap(0, SMALL_ZONE, PROT, MAP, -1, 0)) == MAP_FAILED)
-			return (NULL);
-	mem->size = SMALL_ZONE - META_SIZE;
+	if ((mem = (t_meta*)mmap(0, zone_size, PROT, MAP, -1, 0)) == MAP_FAILED)
+		return (NULL);
+	mem->size = zone_size - META_SIZE;
 	return (mem);
 }
 
@@ -54,10 +36,12 @@ void			*alloc_mem_tiny(size_t size)
 
 	if ((mem = find_free_chunk(g_mem.tiny, size + META_SIZE)) == NULL)
 	{
-		mem = mmap_zone_tiny();
+		mem = mmap_zone(&(g_mem.tiny), TINY_ZONE);
 		update_meta_info(&mem, size);
+		if (g_mem.tiny_last)
+			g_mem.tiny_last->next = mem;
 		g_mem.tiny_last = mem;
-		return (mem->data);	
+		return (mem->data);
 	}
 	update_meta_info(&mem, size);
 	g_mem.tiny_last = mem;
@@ -70,10 +54,12 @@ void			*alloc_mem_small(size_t size)
 
 	if ((mem = find_free_chunk(g_mem.small, size + META_SIZE)) == NULL)
 	{
-		mem = mmap_zone_small();
+		mem = mmap_zone(&(g_mem.small), SMALL_ZONE);
 		update_meta_info(&mem, size);
+		if (g_mem.small_last)
+			g_mem.small_last->next = mem;
 		g_mem.small_last = mem;
-		return (mem->data);	
+		return (mem->data);
 	}
 	update_meta_info(&mem, size);
 	g_mem.small_last = mem;
@@ -99,6 +85,8 @@ void			*alloc_mem_large(size_t size)
 	mem->free = 0;
 	mem->size = size;
 	mem->data = mem + 1;
+	if (g_mem.large_last)
+		g_mem.large_last->next = mem;
 	g_mem.large_last = mem;
 	if (g_mem.large == NULL)
 		g_mem.large = mem;

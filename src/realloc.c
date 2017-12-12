@@ -6,13 +6,13 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/11 16:09:17 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 14:03:03 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void	*resize_allocation(t_meta *ptr, size_t size)
+static void		*resize_allocation(t_meta *ptr, size_t size)
 {
 	void	*mem;
 	t_meta	*next;
@@ -22,7 +22,7 @@ static void	*resize_allocation(t_meta *ptr, size_t size)
 	{
 		ptr->size = ptr->size + next->size + META_SIZE;
 		ptr->free = 0;
-		ptr->next = next->next;	
+		ptr->next = next->next;
 		return ((void*)ptr);
 	}
 	if ((mem = malloc(size)) == NULL)
@@ -50,10 +50,10 @@ static void		*ft_realloc(void *ptr, size_t size)
 		return (malloc(size));
 	}
 	join_free_chunks();
-	return(resize_allocation(real_ptr, size));
+	return (resize_allocation(real_ptr, size));
 }
 
-void		*realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
 	t_meta	*ptr_re;
 

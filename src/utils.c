@@ -6,18 +6,58 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 18:26:12 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/08 22:17:51 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 14:14:59 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void		init_first_chunk(t_meta **mem, size_t size)
+void		print_free_chunks(t_meta *mem, size_t size)
 {
-	(*mem)->next = NULL;
-	(*mem)->free = 1;
-	(*mem)->size = size - META_SIZE; 
-	(*mem)->data = (*mem) + META_SIZE;
+	t_meta	*ptr;
+
+	ptr = mem;
+	ft_putstr("Looking for size >= ");
+	ft_putnbr(size);
+	ft_putendl(" ");
+	while (ptr)
+	{
+		if (ptr->free)
+		{
+			ft_putstr("Found: ");
+			ft_putnbr(ptr->size);
+			ft_putendl(" ");
+		}
+		ptr = ptr->next;
+	}
+}
+
+static void	join_free_chunks_list(t_meta **list, t_meta **last)
+{
+	t_meta *next;
+	t_meta *ptr;
+
+	if ((ptr = *list) == NULL)
+		return ;
+	while (ptr->next)
+	{
+		next = ptr->next;
+		if (ptr->free && next && next->free)
+		{
+			ptr->size = ptr->size + next->size + META_SIZE;
+			ptr->next = next->next;
+		}
+		else
+			ptr = next;
+	}
+	*last = ptr;
+}
+
+void		join_free_chunks(void)
+{
+	join_free_chunks_list(&(g_mem.tiny), &(g_mem.tiny_last));
+	join_free_chunks_list(&(g_mem.small), &(g_mem.small_last));
+	join_free_chunks_list(&(g_mem.large), &(g_mem.large_last));
 }
 
 void		update_meta_info(t_meta **mem, size_t chunk_size)
