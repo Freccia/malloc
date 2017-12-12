@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "malloc.h"
 
 int main()
 {
@@ -15,6 +16,8 @@ int main()
 	//  malloc(1024 * 1024);
 	//  malloc(1024 * 1024 * 16);
 	//  malloc(1024 * 1024 * 128);
+	show_alloc_mem_ex();
+	free(ptr);
 	show_alloc_mem_ex();
 	return (0);
 } 

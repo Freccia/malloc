@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/11 19:17:55 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 14:04:54 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	print_memory_ex(t_meta *list, char *str, size_t tot)
 	}
 	while (list)
 	{
-		if (list->free == 0)
+		if (list->free >= 0)
 		{
 			ft_putptr(list->data);
 			ft_putstr(" - ");

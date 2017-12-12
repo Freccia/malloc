@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:41:30 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/11 16:32:47 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/12 14:00:24 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*malloc(size_t size)
 {
 	void	*mem;
-	
+
 	pthread_mutex_lock(&g_mutex);
 	if (size <= 0)
 	{

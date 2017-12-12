@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/11 18:41:34 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/12 11:44:58 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,22 +59,23 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 test:
-	@printf "$(White) Making $(NAME_TEST) $(ENDC)\n"
+	@printf "$(WHITE) Making $(NAME_TEST) $(ENDC)\n"
 	$(CC) -I include/ -I libft/libft/ -o $(NAME_TEST) src/main.c -L libft -L. -lft -lft_malloc
+	$(CC) -o test0 ./tests/test0.c
 	$(CC) -o test1 ./tests/test1.c
 	$(CC) -o test2 ./tests/test2.c
 	$(CC) -o test3 ./tests/test3.c
 	$(CC) -o test4 ./tests/test4.c
 	$(CC) -o test5 ./tests/test5.c
-	$(CC) -o test6 ./tests/test6.c -L. -lft_malloc 
-	$(CC) -o test7 ./tests/test7.c -L. -lft_malloc 
+	$(CC) -o test6 ./tests/test6.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test7 ./tests/test7.c -I include/ -I libft/libft/ -L. -lft_malloc 
 
 clean:
 	@rm -rf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
 
 fclean: clean libfclean
-	@rm -fv $(NAME) $(NAME_SLINK) $(NAME_TEST) test[0-9]
-	@printf "$(WHITE) [ $(RED)REMOVED $(WHITE)] $(NAME) $(ENDC)\n"
+	@rm -fv libft_malloc_*.so $(NAME_SLINK) $(NAME_TEST) test[0-9]
+	@printf "$(WHITE) [ $(RED)REMOVED $(WHITE)] $(NAME_SLINK) $(ENDC)\n"
 
 lib:
 	@make -C ./libft
