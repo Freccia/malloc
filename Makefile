@@ -38,7 +38,7 @@ LIB 		= $(addprefix -L, $(LIB_PATH))
 INC 		= $(addprefix -I ,$(INC_PATH))
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fPIC
 
 RED			= \033[0;31m
 GREEN		= \033[0;32m
