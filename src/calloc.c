@@ -19,6 +19,7 @@ void	*calloc(size_t count, size_t size)
 
 	pthread_mutex_lock(&g_mutex);
 	tot_size = count * size;
+	add_allocation_in_history(TYPE_CALLOC, tot_size, NULL);
 	if ((mem = malloc(tot_size)) == NULL)
 	{
 		pthread_mutex_unlock(&g_mutex);

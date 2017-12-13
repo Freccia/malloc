@@ -59,6 +59,7 @@ void			*realloc(void *ptr, size_t size)
 	t_meta	*ptr_re;
 
 	pthread_mutex_lock(&g_mutex);
+	add_allocation_in_history(TYPE_REALLOC, size, ptr);
 	ptr_re = ft_realloc(ptr, size);
 	pthread_mutex_lock(&g_mutex);
 	return (ptr_re);

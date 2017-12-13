@@ -59,10 +59,10 @@
 # define TINY_ZONE		(size_t)(TINY_SIZE + META_SIZE) * 100
 # define SMALL_ZONE		(size_t)(SMALL_SIZE + META_SIZE) * 100
 
-# define TYPE_MALLOC	1
-# define TYPE_CALLOC	2
-# define TYPE_REALLOC	4
-# define TYPE_FREE		8
+# define TYPE_MALLOC	(uint8_t)1
+# define TYPE_CALLOC	(uint8_t)2
+# define TYPE_REALLOC	(uint8_t)4
+# define TYPE_FREE		(uint8_t)8
 
 /*
 **  Structures
@@ -76,6 +76,7 @@ struct					s_alloc
 	t_alloc				*next;
 	uint8_t				type;
 	size_t				size;
+	void					*location;
 	size_t				space_left;
 };
 
@@ -125,6 +126,8 @@ void					*alloc_mem_large(size_t size);
 /*
 **	Utils
 */
+void					add_allocation_in_history(uint8_t type, size_t size, void *location);
+void					print_allocation_history(void);
 void					print_free_chunks(t_meta *mem, size_t size);
 void					join_free_chunks();
 void					update_meta_info(t_meta **mem, size_t chunk_size);

@@ -12,66 +12,72 @@
 
 #include "malloc.h"
 
-void		add_allocation_in_history(uint8_t type, size_t size)
+static void		*alloc_page_history(t_alloc **last, uint8_t type, \
+				size_t size, void *location)
+{
+		t_alloc	*tmp;
+
+		if ((tmp = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
+				== MAP_FAILED)
+			return (NULL);
+		memset(tmp, 0, TINY_ZONE);
+		if (*last)
+			(*last)->next = tmp;
+		tmp->next = NULL;
+		tmp->type = type;
+		tmp->size = size;
+		tmp->location = location;
+		tmp->space_left = TINY_ZONE - sizeof(t_alloc);
+		*last = tmp;
+		return ((void*)tmp);
+}
+
+void				add_allocation_in_history(uint8_t type, size_t size, void *location)
 {
 	static t_alloc	*last = NULL;
 	t_alloc			*ptr;
 
 	if (!g_history)
 	{
-		if ((g_history = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
-				== MAP_FAILED)
-			return ;
-		g_history->next = NULL;
-		g_history->type = type;
-		g_history->size = size;
-		g_history->space_left = TINY_ZONE - sizeof(t_alloc);
-		last = g_history;
+		g_history = alloc_page_history(&last, type, size, location);
 		return ;
 	}
 	if (last->space_left - sizeof(t_alloc) <= 0)
 	{
-		if ((ptr = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
-				== MAP_FAILED)
-			return ;
-		last->next = ptr;
-		ptr->next = NULL;
-		ptr->type = type;
-		ptr->size = size;
-		ptr->space_left = TINY_ZONE - sizeof(t_alloc);
-		last = ptr;
+		alloc_page_history(&last, type, size, location);
 		return ;
 	}
 	ptr = last + 1;
 	ptr->next = NULL;
 	ptr->type = type;
 	ptr->size = size;
+	ptr->location = location;
 	ptr->space_left = last->space_left - sizeof(t_alloc);
+	last->next = ptr;
+	last = ptr;
 }
 
 static void	print_allocation_type(t_alloc *ptr)
 {
 	if (ptr->type == TYPE_MALLOC)
 	{
-		ft_putstr("malloc -- SIZE: ");
+		ft_putstr("malloc	 -- size: ");
 		ft_putnbr(ptr->size);
-		ft_putchar('\n');
 	}
-	if (ptr->type == TYPE_MALLOC)
+	if (ptr->type == TYPE_CALLOC)
 	{
-		ft_putstr("calloc -- SIZE: ");
+		ft_putstr("calloc   -- size: ");
 		ft_putnbr(ptr->size);
-		ft_putchar('\n');
 	}
-	if (ptr->type == TYPE_MALLOC)
+	if (ptr->type == TYPE_REALLOC)
 	{
-		ft_putstr("realloc -- SIZE: ");
+		ft_putstr("realloc  -- size: ");
 		ft_putnbr(ptr->size);
-		ft_putchar('\n');
 	}
-	if (ptr->type == TYPE_MALLOC)
+	if (ptr->type == TYPE_FREE)
 	{
-		ft_putendl("free");
+		ft_putstr("free     -- location: ");
+		ft_putptr(ptr->location);
 	}
 }
 
@@ -82,9 +88,9 @@ void		print_allocation_history()
 	if (g_history)
 	{
 		ptr = g_history;
+		ft_putendl("Memory Requests: ");
 		while (ptr)
 		{
-			ft_putstr("TYPE: ");
 			print_allocation_type(ptr);	
 			ft_putchar('\n');
 			ptr = ptr->next;

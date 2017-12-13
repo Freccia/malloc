@@ -5,3 +5,4 @@
 - show_alloc_mem_ex
 - calloc 
 - memalign
+- history

@@ -1,4 +1,5 @@
 
+#include <string.h>
 #include <stdio.h>		//norme
 #include <unistd.h>		//norme
 #include "malloc.h"
@@ -29,9 +30,13 @@ int main(int ac, char **av)
 		ft_putendl("----------------------------------");
 
 		ft_putstr("Allocating space...\n");
-		char *heap_chunk = malloc(10000);
+		char *heap_chunk = malloc(99);
 		char *heap_chunk3 = malloc(10000);
 
+		heap_chunk3 = calloc(10, 100);
+		heap_chunk3 = realloc(heap_chunk3, 100);
+		heap_chunk3 = realloc(heap_chunk3, 10000);
+		heap_chunk3 = realloc(heap_chunk3, 100000000);
 		ft_putstr("Writing to allocated space...\n");
 		heap_chunk = strcpy(heap_chunk, "0123456789abcdefgh");
 
@@ -74,6 +79,10 @@ LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 
 		ft_putendl("----------------------------------");
 		show_alloc_mem();
+		ft_putendl("----------------------------------");
+
+		ft_putendl("----------------------------------");
+		print_allocation_history();
 		ft_putendl("----------------------------------");
 
 
