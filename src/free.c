@@ -56,6 +56,7 @@ static void	ft_free(void *ptr)
 void		free(void *ptr)
 {
 	pthread_mutex_lock(&g_mutex);
+	add_allocation_in_history(TYPE_FREE, 0, ptr);
 	ft_free(ptr);
 	join_free_chunks();
 	pthread_mutex_unlock(&g_mutex);

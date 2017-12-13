@@ -17,6 +17,7 @@ void	*malloc(size_t size)
 	void	*mem;
 
 	pthread_mutex_lock(&g_mutex);
+	add_allocation_in_history(TYPE_MALLOC, size, NULL);
 	if (size <= 0)
 	{
 		pthread_mutex_unlock(&g_mutex);
