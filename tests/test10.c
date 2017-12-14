@@ -4,9 +4,21 @@
 
 int main()
 {
-	size_t x = 12;
+		void    *mem;
 
-	ft_putnbr((x - 1) & -x);
-	ft_putnbr(11 & -12);
-	return (0);
+		mem = calloc(10, 10);
+		ft_putendl("----------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------");
+		mem = realloc(mem, 100);
+		ft_putendl("----------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------");
+		mem = realloc(mem, 200);
+		ft_putendl("----------------------");
+		show_alloc_mem();
+		ft_putendl("----------------------");
+		mem = realloc(mem, 50);
+		show_alloc_mem();
+		return (0);
 } 
