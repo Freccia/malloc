@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/12 16:48:08 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/14 15:40:14 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ $(NAME): $(OBJ)
 
 test:
 	@printf "$(WHITE) Making $(NAME_TEST) $(ENDC)\n"
-	$(CC) -I include/ -I libft/libft/ -o $(NAME_TEST) src/main.c -L libft -L. -lft -lft_malloc
+	$(CC) -I include/ -I libft/libft/ -o $(NAME_TEST) tests/main.c -L libft -L. -lft -lft_malloc
 	$(CC) -o test0 ./tests/test0.c
 	$(CC) -o test1 ./tests/test1.c
 	$(CC) -o test2 ./tests/test2.c
@@ -71,6 +71,9 @@ test:
 	$(CC) -o test7 ./tests/test7.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test8 ./tests/test8.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test9 ./tests/test9.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test10 ./tests/test10.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test11 ./tests/test11.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test12 ./tests/test12.c -I include/ -I libft/libft/ -L. -lft_malloc 
 
 clean:
 	@rm -rf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
