@@ -2,24 +2,40 @@
 #include <string.h>
 #include "malloc.h"
 
+/*
+**	This tests if memalign is correct
+*/
+
 int main()
 {
 	char	*str;
 	void	*ptr;
 	size_t	align = 4;
 
-	str = memalign(16, 30);
-	strcpy(str, "Hello World!\n");
-	if ((ptr = memalign(align, 100)) == NULL)
+	if ((str = memalign(16, 30)) != NULL)
 	{
-		ft_putendl("NULL");
+		strcpy(str, "Hello World!\n");
+		if ((uintptr_t)ptr % align)
+			ft_putendl("STR: NON ALIGNED");
 	}
-	else if ((uintptr_t)ptr % align)
-		ft_putendl("NON ALIGNED");
 	else
-		ft_memset(ptr, 'a', 3);
+		ft_putendl("RETURNED NULL");
+	if ((ptr = memalign(align, 100)) != NULL)
+	{
+		strcpy(ptr, "yeyeyeyeyeyyeyeyeyeyey\n");
+		if ((uintptr_t)ptr % align)
+			ft_putendl("PTR: NON ALIGNED");
+		else
+			ft_memset(ptr, 'a', 50);
+	}
+	else
+		ft_putendl("RETURNED NULL");
+	ft_putendl("---------------------------------");
 	show_alloc_mem_ex();
+	ft_putendl("\n---------------------------------");
+	ft_putendl("\n---------------------------------");
 	free(ptr);
 	show_alloc_mem_ex();
+	ft_putendl("\n---------------------------------");
 	return (0);
 } 

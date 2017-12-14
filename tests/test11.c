@@ -14,13 +14,25 @@ void print(char *s)
 int main()
 {
 		char *addr1;
+		char *addr2;
 		char *addr3;
 
-		addr1 = (char*)malloc(16*M);
+		addr1 = (char*)malloc(30);
 		strcpy(addr1, "Bonjours\n");
 		print(addr1);
-		addr3 = (char*)realloc(addr1, 128*M);
-		addr3[127*M] = 42;
-		print(addr3);
+		addr2 = (char*)malloc(1000);
+		if ((addr3 = (char*)realloc(addr1, 128)) != NULL)
+		{
+			addr3[10] = 42;
+			print(addr3);
+		}
+		addr1 = (char*)calloc(40, 60);
+		strcpy(addr1, "Bonjours\n\0");
+		print(addr1);
+		free(addr1);
+
+		ft_putendl("----------------------------------");
+		print_allocation_history();
+		ft_putendl("----------------------------------");
 		return (0);
 } 

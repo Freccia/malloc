@@ -6,29 +6,39 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 15:02:56 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/14 16:53:31 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
+// TODO fix realloc
 static void		*resize_allocation(t_meta *ptr, size_t size)
 {
 	void	*mem;
+	t_meta	*tmp;
 	t_meta	*next;
+	size_t	tmp_size;
 
 	next = ptr->next ? ptr->next : NULL;
-	if (next && next->free && (ptr->size + next->size + META_SIZE) >= size)
+	if (next && next->free && (ptr->size + next->size) > size)
 	{
-		ptr->size = ptr->size + next->size + META_SIZE;
+		tmp_size = next->size;
+		tmp = next->next;
+		ptr->next = (void*)ptr->data + size;
 		ptr->free = 0;
-		ptr->next = next->next;
+		next = ptr->next;
+		next->size = tmp_size - (size - ptr->size);
+		ptr->size = size;
+		next->next = tmp;
+		next->data = (void*)next + META_SIZE;
+		next->free = 1;
 		return ((void*)ptr);
 	}
 	if ((mem = malloc(size)) == NULL)
 		return (NULL);
 	ft_memmove(mem, ptr->data, ptr->size);
-	free(ptr);
+	ptr->free = 1;
 	return (mem);
 }
 
