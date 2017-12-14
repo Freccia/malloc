@@ -12,7 +12,7 @@
 
 #include "malloc.h"
 
-static size_t	print_memory_ex(t_meta *list, char *str, size_t tot)
+static size_t	print_alloc_memory_ex(t_meta *list, char *str, size_t tot)
 {
 	if (list && str)
 	{
@@ -31,7 +31,7 @@ static size_t	print_memory_ex(t_meta *list, char *str, size_t tot)
 			ft_putnbr(list->size);
 			ft_putendl(" octets");
 			ft_putendl("Data: ");
-			ft_print_memory(list->data, list->size);
+			print_memory(list->data, list->size);
 			ft_putchar('\n');
 			tot += list->size;
 		}
@@ -40,7 +40,7 @@ static size_t	print_memory_ex(t_meta *list, char *str, size_t tot)
 	return (tot);
 }
 
-static size_t	print_memory(t_meta *list, char *str)
+static size_t	print_alloc_memory(t_meta *list, char *str)
 {
 	size_t		tot;
 
@@ -74,9 +74,9 @@ void			show_alloc_mem(void)
 
 	pthread_mutex_lock(&g_mutex);
 	tot = 0;
-	tot += print_memory(g_mem.tiny, "TINY: ");
-	tot += print_memory(g_mem.small, "SMALL: ");
-	tot += print_memory(g_mem.large, "LARGE: ");
+	tot += print_alloc_memory(g_mem.tiny, "TINY: ");
+	tot += print_alloc_memory(g_mem.small, "SMALL: ");
+	tot += print_alloc_memory(g_mem.large, "LARGE: ");
 	ft_putstr("total: ");
 	ft_putnbr(tot);
 	ft_putendl(" octets");
@@ -89,9 +89,9 @@ void			show_alloc_mem_ex(void)
 
 	pthread_mutex_lock(&g_mutex);
 	tot = 0;
-	tot += print_memory_ex(g_mem.tiny, "TINY: ", 0);
-	tot += print_memory_ex(g_mem.small, "SMALL: ", 0);
-	tot += print_memory_ex(g_mem.large, "LARGE: ", 0);
+	tot += print_alloc_memory_ex(g_mem.tiny, "TINY: ", 0);
+	tot += print_alloc_memory_ex(g_mem.small, "SMALL: ", 0);
+	tot += print_alloc_memory_ex(g_mem.large, "LARGE: ", 0);
 	ft_putstr("total: ");
 	ft_putnbr(tot);
 	ft_putendl(" octets");
