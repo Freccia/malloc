@@ -6,13 +6,12 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:07:31 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/14 16:53:31 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 12:50:34 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-// TODO fix realloc
 static void		*resize_allocation(t_meta *ptr, size_t size)
 {
 	void	*mem;
@@ -33,7 +32,7 @@ static void		*resize_allocation(t_meta *ptr, size_t size)
 		next->next = tmp;
 		next->data = (void*)next + META_SIZE;
 		next->free = 1;
-		return ((void*)ptr);
+		return ((void*)ptr->data);
 	}
 	if ((mem = malloc(size)) == NULL)
 		return (NULL);
@@ -66,11 +65,11 @@ static void		*ft_realloc(void *ptr, size_t size)
 
 void			*realloc(void *ptr, size_t size)
 {
-	t_meta	*ptr_re;
+	void	*re_ptr;
 
 	pthread_mutex_lock(&g_mutex);
 	add_allocation_in_history(TYPE_REALLOC, size, ptr);
-	ptr_re = ft_realloc(ptr, size);
+	re_ptr = ft_realloc(ptr, size);
 	pthread_mutex_lock(&g_mutex);
-	return (ptr_re);
+	return (re_ptr);
 }
