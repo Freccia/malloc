@@ -6,6 +6,10 @@
 
 #define M (1024 * 1024)
 
+/*
+**	Tests allocation history
+*/
+
 void print(char *s)
 {
 		write(1, s, strlen(s));
@@ -29,10 +33,12 @@ int main()
 		addr1 = (char*)calloc(40, 60);
 		strcpy(addr1, "Bonjours\n\0");
 		print(addr1);
+		free(addr2);
 		free(addr1);
+		free(addr3);
 
-		ft_putendl("----------------------------------");
+		ft_putendl("----- ALLOCATION HISTORY --------------");
 		print_allocation_history();
-		ft_putendl("----------------------------------");
+		ft_putendl("---------------------------------------");
 		return (0);
 } 

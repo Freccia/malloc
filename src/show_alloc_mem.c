@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/14 16:54:58 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 12:49:26 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,8 @@ static size_t	print_alloc_memory(t_meta *list, char *str)
 	}
 	while (list)
 	{
-		ft_putstr("eee\n");
-		if (list->free == 0)
+		if (list->free >= 0)
 		{
-			ft_putstr("iii\n");
 			ft_putptr(list->data);
 			ft_putstr(" - ");
 			ft_putptr((void*)list->data + list->size);

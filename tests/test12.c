@@ -6,6 +6,10 @@
 
 #define M (1)
 
+/*
+**	Tests realloc
+*/
+
 void print(char *s)
 {
   write(1, s, strlen(s));
