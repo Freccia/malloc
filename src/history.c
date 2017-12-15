@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:20:59 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 16:51:20 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 16:16:09 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		*alloc_page_history(t_alloc **last, uint8_t type, \
 		if ((tmp = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
 				== MAP_FAILED)
 			return (NULL);
-		memset(tmp, 0, TINY_ZONE);
+		ft_memset(tmp, 0, TINY_ZONE);
 		if (*last)
 			(*last)->next = tmp;
 		tmp->next = NULL;
