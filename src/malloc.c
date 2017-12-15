@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:41:30 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 14:00:24 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 19:48:00 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*malloc(size_t size)
 
 	pthread_mutex_lock(&g_mutex);
 	add_allocation_in_history(TYPE_MALLOC, size, NULL);
-	if (size <= 0)
+	if (size <= 0 || size >= SIZE_MAX)
 	{
 		pthread_mutex_unlock(&g_mutex);
 		return (NULL);
