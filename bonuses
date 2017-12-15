@@ -6,3 +6,5 @@
 - calloc 
 - memalign
 - history
+
+note: some commands tend to segv if calloc is present into the lib
