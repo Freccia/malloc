@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/15 16:19:18 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/15 18:46:43 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,8 +65,9 @@ test:
 	$(CC) -o test1 ./tests/test1.c
 	$(CC) -o test2 ./tests/test2.c
 	$(CC) -o test3 ./tests/test3.c
+	$(CC) -o test3+ ./tests/test3+.c
 	$(CC) -o test4 ./tests/test4.c
-	$(CC) -o test5 ./tests/test5.c
+	$(CC) -o test5 ./tests/test5.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test6 ./tests/test6.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test7 ./tests/test7.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test8 ./tests/test8.c -I include/ -I libft/libft/ -L. -lft_malloc 
@@ -77,7 +78,7 @@ test:
 
 clean:
 	@rm -vrf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
-	@rm -vf test[0-9] test[0-9][0-9] test_malloc
+	@rm -vf test[0-9] test[0-9][+0-9] test_malloc
 
 fclean: clean libfclean
 	@rm -fv libft_malloc_*.so $(NAME_SLINK) $(NAME_TEST) test[0-9]

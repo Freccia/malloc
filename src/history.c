@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:20:59 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/15 16:16:09 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 18:34:36 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void				add_allocation_in_history(uint8_t type, size_t size, void *location)
 	static t_alloc	*last = NULL;
 	t_alloc			*ptr;
 
-	if (!g_history)
+	if (!g_mem.alloc_history)
 	{
-		g_history = alloc_page_history(&last, type, size, location);
+		g_mem.alloc_history = alloc_page_history(&last, type, size, location);
 		return ;
 	}
 	if (last->space_left - sizeof(t_alloc) <= 0)
@@ -85,9 +85,9 @@ void		print_allocation_history()
 {
 	t_alloc		*ptr;
 
-	if (g_history)
+	if (g_mem.alloc_history)
 	{
-		ptr = g_history;
+		ptr = g_mem.alloc_history;
 		ft_putendl("Memory Requests: ");
 		while (ptr)
 		{

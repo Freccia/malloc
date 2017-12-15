@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/15 12:52:46 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 18:34:18 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ struct					s_page
 	struct s_meta		*tiny_last;
 	struct s_meta		*small_last;
 	struct s_meta		*large_last;
+	t_alloc				*alloc_history;
 };
 
 /*
@@ -103,7 +104,6 @@ struct					s_page
 */
 t_page					g_mem;
 pthread_mutex_t			g_mutex;
-t_alloc					*g_history;
 
 /*
 **  Functions prototypes
