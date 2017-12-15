@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/15 18:46:43 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/15 19:50:59 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ test:
 	$(CC) -o test10 ./tests/test10.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test11 ./tests/test11.c -I include/ -I libft/libft/ -L. -lft_malloc 
 	$(CC) -o test12 ./tests/test12.c -I include/ -I libft/libft/ -L. -lft_malloc 
+	$(CC) -o test13 ./tests/test13.c -I include/ -I libft/libft/ -L. -lft_malloc 
 
 clean:
 	@rm -vrf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
