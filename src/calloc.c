@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:09:19 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/15 20:39:13 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/16 17:30:58 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	This is valid until we are working on a 64 machine.
 */
 
-static size_t safe_mult_64(size_t n, size_t size)
+static size_t	safe_mult_64(size_t n, size_t size)
 {
 	__uint128_t dn;
 	__uint128_t dsize;
@@ -32,7 +32,7 @@ static size_t safe_mult_64(size_t n, size_t size)
 	return (drsize);
 }
 
-void	*calloc(size_t count, size_t size)
+void			*calloc(size_t count, size_t size)
 {
 	t_meta	*mem;
 	size_t	tot;
