@@ -1,19 +1,16 @@
-#include <unistd.h>
-#include <string.h>
 #include <stdlib.h>
-
-void print(char *s)
-{
-	write(1, s, strlen(s));
-}
+#include "malloc.h"
 
 int main()
 {
-	char *addr;
-
-	addr = malloc(16);
-	free(NULL);
-	free((void *)addr + 5);
-	if (realloc((void *)addr + 5, 10) == NULL)
-		print("Bonjours\n");
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+  malloc(1024);
+  malloc(1024 * 32);
+  malloc(1024 * 1024);
+  malloc(1024 * 1024 * 16);
+  malloc(1024 * 1024 * 128);
+#pragma clang diagnostic pop
+  show_alloc_mem();
+  return (0);
 } 

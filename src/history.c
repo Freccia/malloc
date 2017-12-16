@@ -6,40 +6,40 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 16:20:59 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 16:51:20 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/16 17:32:12 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void		*alloc_page_history(t_alloc **last, uint8_t type, \
-				size_t size, void *location)
+static void	*alloc_page_history(t_alloc **last, uint8_t type, \
+		size_t size, void *location)
 {
-		t_alloc	*tmp;
+	t_alloc	*tmp;
 
-		if ((tmp = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
-				== MAP_FAILED)
-			return (NULL);
-		memset(tmp, 0, TINY_ZONE);
-		if (*last)
-			(*last)->next = tmp;
-		tmp->next = NULL;
-		tmp->type = type;
-		tmp->size = size;
-		tmp->location = location;
-		tmp->space_left = TINY_ZONE - sizeof(t_alloc);
-		*last = tmp;
-		return ((void*)tmp);
+	if ((tmp = (t_alloc*)mmap(0, TINY_ZONE, PROT, MAP, -1, 0))
+			== MAP_FAILED)
+		return (NULL);
+	ft_memset(tmp, 0, TINY_ZONE);
+	if (*last)
+		(*last)->next = tmp;
+	tmp->next = NULL;
+	tmp->type = type;
+	tmp->size = size;
+	tmp->location = location;
+	tmp->space_left = TINY_ZONE - sizeof(t_alloc);
+	*last = tmp;
+	return ((void*)tmp);
 }
 
-void				add_allocation_in_history(uint8_t type, size_t size, void *location)
+void		add_allocation_in_history(uint8_t type, size_t size, void *location)
 {
 	static t_alloc	*last = NULL;
 	t_alloc			*ptr;
 
-	if (!g_history)
+	if (!g_mem.alloc_history)
 	{
-		g_history = alloc_page_history(&last, type, size, location);
+		g_mem.alloc_history = alloc_page_history(&last, type, size, location);
 		return ;
 	}
 	if (last->space_left - sizeof(t_alloc) <= 0)
@@ -81,17 +81,17 @@ static void	print_allocation_type(t_alloc *ptr)
 	}
 }
 
-void		print_allocation_history()
+void		print_allocation_history(void)
 {
 	t_alloc		*ptr;
 
-	if (g_history)
+	if (g_mem.alloc_history)
 	{
-		ptr = g_history;
+		ptr = g_mem.alloc_history;
 		ft_putendl("Memory Requests: ");
 		while (ptr)
 		{
-			print_allocation_type(ptr);	
+			print_allocation_type(ptr);
 			ft_putchar('\n');
 			ptr = ptr->next;
 		}

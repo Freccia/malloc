@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:12:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 16:51:01 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 18:34:18 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ struct					s_alloc
 	t_alloc				*next;
 	uint8_t				type;
 	size_t				size;
-	void					*location;
+	void				*location;
 	size_t				space_left;
 };
 
@@ -96,6 +96,7 @@ struct					s_page
 	struct s_meta		*tiny_last;
 	struct s_meta		*small_last;
 	struct s_meta		*large_last;
+	t_alloc				*alloc_history;
 };
 
 /*
@@ -103,7 +104,6 @@ struct					s_page
 */
 t_page					g_mem;
 pthread_mutex_t			g_mutex;
-t_alloc					*g_history;
 
 /*
 **  Functions prototypes
@@ -126,7 +126,8 @@ void					*alloc_mem_large(size_t size);
 /*
 **	Utils
 */
-void					add_allocation_in_history(uint8_t type, size_t size, void *location);
+void					add_allocation_in_history(uint8_t type, \
+		size_t size, void *location);
 void					print_allocation_history(void);
 void					print_free_chunks(t_meta *mem, size_t size);
 void					join_free_chunks();

@@ -11,10 +11,15 @@ int main()
 	strcpy(str, "Hello World!\n");
 	ptr = malloc(100);
 	memset(ptr, 'a', 100);
+	ft_putendl("---------------------------");
 	show_alloc_mem_ex();
-	free(ptr);
-	ptr = calloc(10, 10);
+	ft_putendl("\n---------------------------");
+	str = realloc(str, 1024 * 2);
+	if ((ptr = realloc(ptr, 1024 * 3)) == NULL)
+		ft_putendl("RETURNED NULL");
+	ft_putendl("---------------------------");
 	show_alloc_mem_ex();
+	ft_putendl("\n---------------------------");
 	free(ptr);
 	return (0);
 } 

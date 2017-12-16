@@ -2,6 +2,12 @@
 #include <string.h>
 #include "malloc.h"
 
+/*
+**	The aim of this test is to show
+**  blocks contiguity after a free
+**  (memory defragmentation)
+*/
+
 int main()
 {
 	char *str;

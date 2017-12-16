@@ -3,18 +3,22 @@
 #include "malloc.h"
 
 /*
-**	Test calloc - realloc
+**	Test calloc
 */
 
 int main()
 {
 		void    *mem;
 
-		mem = calloc(10, 10);
-		memset(mem, 'q', 100);
+//		mem = calloc(100000000L, 1000000000000L);
+		if ((mem = malloc(-1)) != NULL)
+			memset(mem, 'o', 100);
+		if ((mem = malloc(-999)) != NULL)
+			memset(mem, 'n', 100);
 		ft_putendl("---ONE----------------");
-		show_alloc_mem();
+		show_alloc_mem_ex();
 		ft_putendl("---ONE----------------");
+		/*
 		mem = realloc(mem, 100);
 		memset(mem, 'w', 100);
 		ft_putendl("---TWO----------------");
@@ -35,6 +39,7 @@ int main()
 		ft_putendl("---FIVE---------------");
 		show_alloc_mem();
 		ft_putendl("---FIVE---------------");
+		*/
 		free(mem);
 		return (0);
 } 

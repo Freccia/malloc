@@ -6,11 +6,16 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:14:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 14:32:53 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/16 22:42:34 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
+/*
+**	if (munmap(tmp->next, tmp->next->size) == -1)
+**		ft_putendl_fd("Error: munmap failed [EINVAL]", 2);
+*/
 
 static void	unmap_large_zone(void *ptr)
 {
@@ -24,8 +29,7 @@ static void	unmap_large_zone(void *ptr)
 		if ((void*)tmp->next == ptr)
 		{
 			tmp->next = tmp->next->next;
-			if (munmap(tmp->next, tmp->next->size) == -1)
-				ft_putendl_fd("Error: munmap failed [EINVAL]", 2);
+			munmap(tmp->next, tmp->next->size);
 			return ;
 		}
 		tmp = tmp->next;

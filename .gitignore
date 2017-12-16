@@ -7,7 +7,7 @@ libft_malloc_x86_64_Darwin.so
 libft_malloc.so
 test
 test[0-9]
-test[0-9][0-9]
+test[0-9][+0-9]
 test_malloc
 
 # Vim swap files

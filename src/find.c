@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/08 14:09:23 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/12 14:12:15 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/15 12:22:11 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_meta	*search_ptr_in_list(t_meta *list, t_meta *list_last, void *ptr)
 			ptr < (void*)list_last + list_last->size)
 		return (list_last);
 	tmp = list;
-	while (tmp && !(tmp->data <= ptr && ptr < (void*)tmp + tmp->size))
+	while (tmp && !(tmp->data <= ptr && ptr < (void*)tmp->data + tmp->size))
 	{
 		tmp = tmp->next;
 	}
