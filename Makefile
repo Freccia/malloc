@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/15 19:50:59 by lfabbro          ###   ########.fr        #
+#    Updated: 2017/12/16 22:03:39 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME_TEST	= test_malloc
 SRC_TEST	= main.c
 SRC_T		= $(addprefix $(SRC_PATH),$(SRC_TEST))
 
-SRC_NAME	= malloc.c free.c realloc.c calloc.c find.c alloc_mem.c \
+SRC_NAME	= malloc.c free.c realloc.c find.c alloc_mem.c \
 			  history.c memalign.c show_alloc_mem.c utils.c
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LIB_NAME	= -lft -lft_malloc
