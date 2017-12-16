@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:09:19 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/16 17:30:58 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/16 22:37:35 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ void			*calloc(size_t count, size_t size)
 	t_meta	*mem;
 	size_t	tot;
 
-	pthread_mutex_lock(&g_mutex);
 	tot = safe_mult_64(count, size);
+	//pthread_mutex_lock(&g_mutex);
 	add_allocation_in_history(TYPE_CALLOC, tot, NULL);
+	//pthread_mutex_unlock(&g_mutex);
 	if ((mem = malloc(tot)) == NULL)
 	{
-		pthread_mutex_unlock(&g_mutex);
 		return (NULL);
 	}
+	//pthread_mutex_lock(&g_mutex);
 	ft_memset(mem, 0, tot);
-	pthread_mutex_unlock(&g_mutex);
+	//pthread_mutex_unlock(&g_mutex);
 	return (mem);
 }
