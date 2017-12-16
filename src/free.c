@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 11:14:42 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/16 22:37:40 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/16 22:42:34 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,9 @@ static void	ft_free(void *ptr)
 
 void		free(void *ptr)
 {
-	ft_putendl("HEL FREE");
-	//pthread_mutex_lock(&g_mutex);
+	pthread_mutex_lock(&g_mutex);
 	add_allocation_in_history(TYPE_FREE, 0, ptr);
 	ft_free(ptr);
 	join_free_chunks();
-	//pthread_mutex_unlock(&g_mutex);
-	ft_putendl("GDB FREE");
+	pthread_mutex_unlock(&g_mutex);
 }
