@@ -22,8 +22,10 @@ NAME_TEST	= test_malloc
 SRC_TEST	= main.c
 SRC_T		= $(addprefix $(SRC_PATH),$(SRC_TEST))
 
-SRC_NAME	= malloc.c free.c realloc.c calloc.c find.c alloc_mem.c \
-			  history.c memalign.c show_alloc_mem.c utils.c
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror -fPIC -g
+
+SRC_NAME	= malloc.c free.c realloc.c show_alloc_mem.c
 OBJ_NAME	= $(SRC_NAME:.c=.o)
 LIB_NAME	= -lft -lft_malloc
 
@@ -36,9 +38,6 @@ SRC			= $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ			= $(SRC:%.c=%.o)
 LIB 		= $(addprefix -L, $(LIB_PATH))
 INC 		= $(addprefix -I ,$(INC_PATH))
-
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -fPIC
 
 RED			= \033[0;31m
 GREEN		= \033[0;32m
@@ -68,14 +67,6 @@ test:
 	$(CC) -o test3+ ./tests/test3+.c
 	$(CC) -o test4 ./tests/test4.c
 	$(CC) -o test5 ./tests/test5.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test6 ./tests/test6.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test7 ./tests/test7.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test8 ./tests/test8.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test9 ./tests/test9.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test10 ./tests/test10.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test11 ./tests/test11.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test12 ./tests/test12.c -I include/ -I libft/libft/ -L. -lft_malloc 
-	$(CC) -o test13 ./tests/test13.c -I include/ -I libft/libft/ -L. -lft_malloc 
 
 clean:
 	@rm -vrf $(OBJ) $(OBJ_PATH) $(SRC_PATH)/*.o
