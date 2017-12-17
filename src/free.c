@@ -6,13 +6,13 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 15:44:27 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:34:40 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 17:01:00 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void		_unmap_large_zone(t_chunk *ptr)
+static void		unmap_large_zone(t_chunk *ptr)
 {
 	t_chunk	*tmp;
 	t_chunk *next;
@@ -39,9 +39,11 @@ void			free(void *ptr)
 
 	if (ptr == NULL)
 		return ;
+	pthread_mutex_lock(&g_mutex);
 	if ((real_ptr = find_memory_chunk(ptr)) == NULL)
 		return ;
 	if (real_ptr->size > SMALL_SIZE)
-		_unmap_large_zone(real_ptr);
+		unmap_large_zone(real_ptr);
 	real_ptr->free = 1;
+	pthread_mutex_unlock(&g_mutex);
 }

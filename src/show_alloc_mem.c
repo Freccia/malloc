@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 21:09:10 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:37:12 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 16:53:06 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void			show_alloc_mem(void)
 {
 	size_t		tot;
 
+	pthread_mutex_lock(&g_mutex);
 	tot = 0;
 	tot += print_alloc_memory(g_mem.tiny, "TINY: ");
 	tot += print_alloc_memory(g_mem.small, "SMALL: ");
@@ -79,12 +80,14 @@ void			show_alloc_mem(void)
 	ft_putstr("total: ");
 	ft_putnbr(tot);
 	ft_putendl(" octets");
+	pthread_mutex_unlock(&g_mutex);
 }
 
 void			show_alloc_mem_ex(void)
 {
 	size_t		tot;
 
+	pthread_mutex_lock(&g_mutex);
 	tot = 0;
 	tot += print_alloc_memory_ex(g_mem.tiny, "TINY: ", 0);
 	tot += print_alloc_memory_ex(g_mem.small, "SMALL: ", 0);
@@ -92,4 +95,5 @@ void			show_alloc_mem_ex(void)
 	ft_putstr("total: ");
 	ft_putnbr(tot);
 	ft_putendl(" octets");
+	pthread_mutex_unlock(&g_mutex);
 }

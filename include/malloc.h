@@ -6,7 +6,7 @@
 /*   By: lfabbro <lfabbro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:36:20 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:36:49 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 17:07:55 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 typedef struct s_chunk		t_chunk;
 typedef struct s_page		t_page;
 
-struct	s_chunk
+struct			s_chunk
 {
 	t_chunk		*next;
 	size_t		size;
@@ -41,7 +41,7 @@ struct	s_chunk
 	void		*data;
 };
 
-struct	s_page
+struct			s_page
 {
 	t_chunk		*tiny;
 	t_chunk		*small;
@@ -52,6 +52,7 @@ struct	s_page
 };
 
 t_page			g_mem;
+pthread_mutex_t	g_mutex;
 
 void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
@@ -75,9 +76,9 @@ t_chunk			*find_memory_chunk(void *ptr);
 **	Utils
 */
 void			join_free_chunks(void);
-void			_init_memory_chunk(t_chunk **mem, size_t size, \
+void			init_memory_chunk(t_chunk **mem, size_t size, \
 		size_t zone_size);
-void			_update_meta_info(t_chunk **mem, size_t size);
+void			update_meta_info(t_chunk **mem, size_t size);
 t_chunk			*find_mem_chunk(size_t size, t_chunk *list);
 
 #endif

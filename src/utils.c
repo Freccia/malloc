@@ -6,13 +6,13 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 14:44:34 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:44:44 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 16:59:09 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void	join_free_chunks_list(t_chunk **list, t_chunk **last)
+static void		join_free_chunks_list(t_chunk **list, t_chunk **last)
 {
 	t_chunk *next;
 	t_chunk *ptr;
@@ -33,14 +33,14 @@ static void	join_free_chunks_list(t_chunk **list, t_chunk **last)
 	*last = ptr;
 }
 
-void		join_free_chunks(void)
+void			join_free_chunks(void)
 {
 	join_free_chunks_list(&(g_mem.tiny), &(g_mem.tiny_last));
 	join_free_chunks_list(&(g_mem.small), &(g_mem.small_last));
 	join_free_chunks_list(&(g_mem.large), &(g_mem.large_last));
 }
 
-void			_init_memory_chunk(t_chunk **mem, size_t size, size_t zone_size)
+void			init_memory_chunk(t_chunk **mem, size_t size, size_t zone_size)
 {
 	t_chunk	*ptr;
 	t_chunk	*next;
@@ -57,7 +57,7 @@ void			_init_memory_chunk(t_chunk **mem, size_t size, size_t zone_size)
 	next->data = (char*)next + META_SIZE;
 }
 
-void			_update_meta_info(t_chunk **mem, size_t size)
+void			update_meta_info(t_chunk **mem, size_t size)
 {
 	t_chunk	*ptr;
 	t_chunk	*tmp;

@@ -6,7 +6,7 @@
 /*   By: lfabbro <lfabbro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:23:53 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:33:00 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 17:07:57 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void		*malloc(size_t size)
 {
 	t_chunk	*mem;
-	
+
+	pthread_mutex_lock(&g_mutex);
 	if (size == 0)
 		return (NULL);
 	if (size <= TINY_SIZE)
@@ -24,5 +25,6 @@ void		*malloc(size_t size)
 		mem = alloc_mem_small(size);
 	else
 		mem = alloc_mem_large(size);
+	pthread_mutex_unlock(&g_mutex);
 	return (mem);
 }

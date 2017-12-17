@@ -6,13 +6,13 @@
 /*   By: lfabbro <lfabbro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:46:45 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 16:38:06 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 17:07:49 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static t_chunk	*_mmap_alloc(size_t size, size_t zone_size,
+static t_chunk	*mmap_alloc(size_t size, size_t zone_size,
 		t_chunk **list, t_chunk **last)
 {
 	t_chunk	*mem;
@@ -24,7 +24,7 @@ static t_chunk	*_mmap_alloc(size_t size, size_t zone_size,
 		return (NULL);
 	}
 	mem = (t_chunk*)tmp;
-	_init_memory_chunk(&mem, size, zone_size);
+	init_memory_chunk(&mem, size, zone_size);
 	if (!*list)
 		*list = mem;
 	if (*last)
@@ -39,10 +39,10 @@ void			*alloc_mem_tiny(size_t size)
 
 	if ((mem = find_free_chunk(size, g_mem.tiny)))
 	{
-		_update_meta_info(&mem, size);
+		update_meta_info(&mem, size);
 		return (mem->data);
 	}
-	mem = _mmap_alloc(size, TINY_ZONE, &g_mem.tiny, &g_mem.tiny_last);
+	mem = mmap_alloc(size, TINY_ZONE, &g_mem.tiny, &g_mem.tiny_last);
 	return (mem->data);
 }
 
@@ -52,10 +52,10 @@ void			*alloc_mem_small(size_t size)
 
 	if ((mem = find_free_chunk(size, g_mem.small)))
 	{
-		_update_meta_info(&mem, size);
+		update_meta_info(&mem, size);
 		return (mem->data);
 	}
-	mem = _mmap_alloc(size, SMALL_ZONE,  &g_mem.small, &g_mem.small_last);
+	mem = mmap_alloc(size, SMALL_ZONE, &g_mem.small, &g_mem.small_last);
 	return (mem->data);
 }
 
