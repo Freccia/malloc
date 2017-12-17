@@ -81,10 +81,6 @@ LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL");
 		show_alloc_mem();
 		ft_putendl("----------------------------------");
 
-		ft_putendl("----------------------------------");
-		print_allocation_history();
-		ft_putendl("----------------------------------");
-
 
 //	leaks
 //		while (1);

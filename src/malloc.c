@@ -6,7 +6,7 @@
 /*   By: lfabbro <lfabbro@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:23:53 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 01:46:29 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/17 16:33:00 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		*malloc(size_t size)
 {
-	t_meta	*mem;
+	t_chunk	*mem;
 	
-	if (size = 0)
+	if (size == 0)
 		return (NULL);
 	if (size <= TINY_SIZE)
 		mem = alloc_mem_tiny(size);
