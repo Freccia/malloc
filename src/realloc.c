@@ -6,7 +6,7 @@
 /*   By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 16:18:08 by lfabbro           #+#    #+#             */
-/*   Updated: 2017/12/17 17:07:53 by lfabbro          ###   ########.fr       */
+/*   Updated: 2017/12/26 16:03:39 by lfabbro          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,14 @@ void			*realloc(void *ptr, size_t size)
 	t_chunk	*real_ptr;
 
 	if (ptr == NULL)
+	{
 		return (malloc(size));
+	}
 	pthread_mutex_lock(&g_mutex);
 	if ((real_ptr = find_memory_chunk(ptr)) == NULL)
+	{
 		return (NULL);
+	}
 	if ((ptr != NULL && size == 0) || real_ptr->size > size)
 	{
 		real_ptr->free = 1;
