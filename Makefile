@@ -6,7 +6,7 @@
 #    By: lfabbro <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/04 21:18:10 by lfabbro           #+#    #+#              #
-#    Updated: 2017/12/16 22:44:09 by lfabbro          ###   ########.fr        #
+#    Updated: 2018/04/17 12:03:34 by lfabbro          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,7 @@ fclean: clean libfclean
 	@printf "$(WHITE) [ $(RED)REMOVED $(WHITE)] $(NAME_SLINK) $(ENDC)\n"
 
 lib:
-	@make -C ./libft
+	@CFLAGS='-fPIC' make -C ./libft
 
 libclean:
 	@make -C ./libft clean
